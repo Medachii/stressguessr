@@ -6,7 +6,7 @@ import requests
 import time
 import json
 
-isAt='Abbot'        #TODO : change the value of isAt to the word you want to start from
+isAt='Accident'        #TODO : change the value of isAt to the word you want to start from
 flag = 0
 # open the file dictionnary.csv in the data folder
 with open('dictionary.csv', 'r') as f:
