@@ -44,7 +44,3 @@ with open('oxford_3000.txt', 'r') as f:
                
             else:
                 continue
-
-
-
-
