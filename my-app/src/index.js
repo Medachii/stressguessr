@@ -2,65 +2,57 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
-class Square extends React.Component {
-    render() {
-      return (
-        <button className="square">
-          {/* TODO */}
-        </button>
-      );
-    }
+class Game extends React.Component {
+  render() {
+    
+    wordChoose();
+    
+    return (
+      <div className="game">
+        <h1>stressguessr</h1>
+        <Word word="hello" />         
+      </div>
+    );
   }
-  
-  class Board extends React.Component {
-    renderSquare(i) {
-      return <Square />;
-    }
-  
-    render() {
-      const status = 'Next player: X';
-  
-      return (
-        <div>
-          <div className="status">{status}</div>
-          <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
-          </div>
-        </div>
-      );
-    }
+}
+
+class Letter extends React.Component {
+  render() {
+    return (
+      <button onClick={letterPushed}>
+        {this.props.letter}
+      </button>
+    );
   }
-  
-  class Game extends React.Component {
-    render() {
-      return (
-        <div className="game">
-          <div className="game-board">
-            <Board />
-          </div>
-          <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
-          </div>
-        </div>
-      );
-    }
+}
+
+class Word extends React.Component {
+  render() {
+    return (
+      <div className="word">
+        <h2>
+          
+          {this.props.word.split('').map((letter) => <Letter letter={letter} />)}
+
+        </h2>
+      </div>
+    );
   }
-  
-  // ========================================
-  
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-  root.render(<Game />);
-  
+}
+
+function letterPushed() {
+  console.log("letter pushed");
+}
+
+function wordChoose(){
+  var fr = new FileReader();
+  let file = open("words.txt", "r");
+
+  let wordChoosen = fr.readAsText(file);
+  console.log(wordChoosen);
+
+}
+// ========================================
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Game />);

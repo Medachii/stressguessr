@@ -49,3 +49,8 @@ body {
     margin-left: 20px;
   }
   
+  .letter {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
