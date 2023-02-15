@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import MenuContainer from './MenuContainer'
-import raw from './data.txt'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import MenuContainer from "./MenuContainer";
+import raw from "./data.txt";
 
 
 class Game extends React.Component {
@@ -38,11 +38,7 @@ class Game extends React.Component {
 
 class Letter extends React.Component {
   render() {
-    return (
-      <button onClick={letterPushed}>
-        {this.props.letter}
-      </button>
-    );
+    return <button onClick={letterPushed}>{this.props.letter}</button>;
   }
 }
 
@@ -62,6 +58,36 @@ class Word extends React.Component {
 
 function letterPushed() {
   console.log("letter pushed");
+  const Http = new XMLHttpRequest();
+  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/hello";
+  Http.open("GET", url);
+  Http.send();
+  Http.responseType = "json";
+  Http.onload = () => {
+    if (Http.readyState == 4 && Http.status == 200) {
+      const data = Http.response;
+      console.log(data);
+      var stressLetter=phonemeCheck(data);
+    } else {
+      console.log(`Error: ${Http.status}`);
+    }
+  };
+}
+
+
+function phonemeCheck(data) {
+  var phoneme = data[0].phonetics[0].text;
+  console.log(phoneme);
+  //determine what letter of the word is the 'stress' letter and return it
+  
+  //get the index of the "'" in the phoneme
+  var stressIndex = phoneme.indexOf("'");
+  console.log(stressIndex);
+  //determine where is the stress letter in the word
+  var stressLetter = phoneme[stressIndex - 1];
+  console.log(stressLetter);
+  //return the stress letter
+  return stressLetter;
 }
 
 // ========================================
