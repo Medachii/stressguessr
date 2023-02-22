@@ -5,6 +5,13 @@ import MenuContainer from "./MenuContainer";
 import raw from "./data.txt";
 
 
+const phonemedictionnary = {'/':'none','h':'h','ə':'e','l':'l','o':'o','ʊ':'none','.':'none',
+'ɪ':'i','l':'l','i':'i','t':'t','ˈ':'here','b':'b'}
+
+
+
+
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +45,12 @@ class Game extends React.Component {
 
 class Letter extends React.Component {
   render() {
-    return <button onClick={letterPushed}>{this.props.letter}</button>;
+    //create a button that will be pushed when the letter is clicked, doing letterPushed() function with the index of the button in parameter
+    return (
+      <button className="letter" onClick={() => letterPushed()}>
+        {this.props.letter}
+      </button>
+    );
   }
 }
 
@@ -59,15 +71,26 @@ class Word extends React.Component {
 function letterPushed() {
   console.log("letter pushed");
   const Http = new XMLHttpRequest();
-  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/hello";
+  
+  const url = "https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}',"hello");
   Http.open("GET", url);
   Http.send();
   Http.responseType = "json";
   Http.onload = () => {
     if (Http.readyState == 4 && Http.status == 200) {
       const data = Http.response;
-      console.log(data);
-      var stressLetter=phonemeCheck(data);
+      
+      let extractedPhoneme=extractPhoneme(data);
+      let phonemeTrad=phonemeTraitement(extractedPhoneme);
+
+      let phoneme=phonemeTrad[0];
+      let stress=phonemeTrad[1];
+      
+      console.log(phoneme);
+      console.log(stress);
+      
+
+      
     } else {
       console.log(`Error: ${Http.status}`);
     }
@@ -75,20 +98,51 @@ function letterPushed() {
 }
 
 
-function phonemeCheck(data) {
+function extractPhoneme(data){
   var phoneme = data[0].phonetics[0].text;
-  console.log(phoneme);
-  //determine what letter of the word is the 'stress' letter and return it
-  
-  //get the index of the "'" in the phoneme
-  var stressIndex = phoneme.indexOf("'");
-  console.log(stressIndex);
-  //determine where is the stress letter in the word
-  var stressLetter = phoneme[stressIndex - 1];
-  console.log(stressLetter);
-  //return the stress letter
-  return stressLetter;
+  //tant que le phoneme est null
+  let i = 1;
+  while (phoneme == null){
+    phoneme = data[0].phonetics[i].text;
+    i++;
+  }
+  return phoneme;
+    
 }
+
+function wordTraitement(word){
+  //we want to transform the double letter into a single letter
+  for (let i=0;i<word.length;i++){
+    if (word[i] == word[i+1]){
+      word = word.slice(0,i) + word.slice(i+1);
+    }
+  }
+  return word;
+
+}
+
+function phonemeTraitement(phoneme){
+  var translation = "";
+  var stress = "none";
+  for (let i=0;i<phoneme.length;i++){
+    var letter = phonemedictionnary[phoneme[i]];
+    console.log("letter : " + letter);
+    if (letter == 'none'){
+      continue;
+    }
+    if (letter == 'here'){
+      stress = i;
+      continue;
+    }
+    translation += letter;
+
+  }
+  console.log("stress" + stress)
+  return [translation,stress-1];
+
+
+}
+
 
 // ========================================
 
