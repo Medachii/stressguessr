@@ -9,7 +9,7 @@ def getAudio(phonetics):
             res = obj['audio']
     return res
 
-with open("raw_phonemes.txt") as file:
+with open("correct_phonemes.txt") as file:
     info = file.readlines()
     couples = [(inf.replace(' ', '').split(',')[0], inf.replace(' ', '').replace('\n', '').split(',')[1]) for inf in info]
     print(info)
