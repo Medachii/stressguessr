@@ -32,7 +32,7 @@ with open("data.txt") as file:
             
             print("Ne possède pas de phonetic (devrait jamais arriver)")
 
-    out = open("phonemes.txt", "w")
+    out = open("raw_phonemes.txt", "w")
     for key in mots_exemples.keys():
         out.write(f"{key}, {mots_exemples[key]}\n")
     out.close()

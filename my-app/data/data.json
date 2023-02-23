@@ -1,0 +1,340 @@
+{
+    "mots": [
+        {
+            "mot": "actor",
+            "phoneme": "\u00e6",
+            "phonetic": "/\u02c8\u00e6k.t\u0259/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/actor-us.mp3"
+        },
+        {
+            "mot": "toy",
+            "phoneme": "\u026a",
+            "phonetic": "/t\u0254\u026a/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/toy-us.mp3"
+        },
+        {
+            "mot": "whole",
+            "phoneme": "\u0259",
+            "phonetic": "/h\u0259\u028al/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/whole-us.mp3"
+        },
+        {
+            "mot": "borrow",
+            "phoneme": "b",
+            "phonetic": "/\u02c8b\u0254\u0279o\u028a/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/borrow-us.mp3"
+        },
+        {
+            "mot": "relationship",
+            "phoneme": "n",
+            "phonetic": "/\u0279\u026a\u02c8le\u026a\u0283(\u0259)n\u0283\u026ap/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/relationship-us.mp3"
+        },
+        {
+            "mot": "loudly",
+            "phoneme": "d",
+            "phonetic": "/\u02c8la\u028adli/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/loudly-us.mp3"
+        },
+        {
+            "mot": "will",
+            "phoneme": "l",
+            "phonetic": "/w\u026al/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/will-us.mp3"
+        },
+        {
+            "mot": "write",
+            "phoneme": "t",
+            "phonetic": "/\u0279a\u026at/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/write-us.mp3"
+        },
+        {
+            "mot": "queen",
+            "phoneme": "i",
+            "phonetic": "/kwi\u02d0n/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/queen-us.mp3"
+        },
+        {
+            "mot": "saving",
+            "phoneme": "e",
+            "phonetic": "/\u02c8se\u026av\u026a\u014b/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/saving-us.mp3"
+        },
+        {
+            "mot": "strength",
+            "phoneme": "\u025b",
+            "phonetic": "/st\u0279\u025b\u014bk\u03b8/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/strength-us.mp3"
+        },
+        {
+            "mot": "fun",
+            "phoneme": "\u028a",
+            "phonetic": "/f\u028an/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/fun-us.mp3"
+        },
+        {
+            "mot": "multiply",
+            "phoneme": "\u028c",
+            "phonetic": "/\u02c8m\u028clt\u026apla\u026a/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/multiply-1-uk.mp3"
+        },
+        {
+            "mot": "virtual",
+            "phoneme": "v",
+            "phonetic": "/\u02c8v\u0275\u02d0t\u0283u\u0259l/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/virtual-uk.mp3"
+        },
+        {
+            "mot": "crazy",
+            "phoneme": "\u0279",
+            "phonetic": "/\u02c8k\u0279e\u026azi/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/crazy-us.mp3"
+        },
+        {
+            "mot": "abroad",
+            "phoneme": "\u0254",
+            "phonetic": "/\u0259\u02c8b\u0279\u0254\u02d0d/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/abroad-us.mp3"
+        },
+        {
+            "mot": "thirteen",
+            "phoneme": "\u02d0",
+            "phonetic": "/\u02cc\u03b8\u025c\u02d0\u02c8ti\u02d0n/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/thirteen-us-stressed.mp3"
+        },
+        {
+            "mot": "worse",
+            "phoneme": "s",
+            "phonetic": "/w\u025c\u02d0s/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/worse-us.mp3"
+        },
+        {
+            "mot": "absolute",
+            "phoneme": "\u02cc",
+            "phonetic": "/\u02c8\u00e6b.s\u0259\u02cclju\u02d0t/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/absolute-us.mp3"
+        },
+        {
+            "mot": "institution",
+            "phoneme": "j",
+            "phonetic": "/\u02cc\u026anst\u026a\u02c8tju\u02d0\u0283\u0259n/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/institution-us.mp3"
+        },
+        {
+            "mot": "who",
+            "phoneme": "u",
+            "phonetic": "/hu\u02d0/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/who-us.mp3"
+        },
+        {
+            "mot": "welcome",
+            "phoneme": "k",
+            "phonetic": "/\u02c8w\u025blk\u0259m/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/welcome-us.mp3"
+        },
+        {
+            "mot": "primary",
+            "phoneme": "m",
+            "phonetic": "/\u02c8p\u0279\u0252em\u0259\u0279i/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/primary-us.mp3"
+        },
+        {
+            "mot": "spot",
+            "phoneme": "p",
+            "phonetic": "/sp\u0252t/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/spot-us.mp3"
+        },
+        {
+            "mot": "geography",
+            "phoneme": "\u0252",
+            "phonetic": "/d\u0292\u026a\u02c8\u0252\u0261\u0279\u0259fi/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/geography-us.mp3"
+        },
+        {
+            "mot": "teaching",
+            "phoneme": "\u0283",
+            "phonetic": "/\u02c8ti\u02d0t\u0283\u026a\u014b/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/teaching-us.mp3"
+        },
+        {
+            "mot": "frighten",
+            "phoneme": "a",
+            "phonetic": "/\u02c8f\u0279a\u026atn\u0329/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/frighten-us.mp3"
+        },
+        {
+            "mot": "thousand",
+            "phoneme": "z",
+            "phonetic": "/\u02c8\u03b8a\u028az\u0259nd/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/thousand-us.mp3"
+        },
+        {
+            "mot": "acknowledge",
+            "phoneme": "\u0292",
+            "phonetic": "/\u0259k\u02c8n\u0252.l\u026ad\u0292/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/acknowledge-us.mp3"
+        },
+        {
+            "mot": "equally",
+            "phoneme": "w",
+            "phonetic": "/\u02c8i\u02d0kw\u0259li/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/equally-us.mp3"
+        },
+        {
+            "mot": "guitar",
+            "phoneme": "\u0251",
+            "phonetic": "/\u0261\u026a\u02c8t\u0251\u02d0(\u0279)/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/guitar-us.mp3"
+        },
+        {
+            "mot": "adventure",
+            "phoneme": "\u025a",
+            "phonetic": "/\u00e6d\u02c8v\u025bnt\u0361\u0283\u025a/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/adventure-us.mp3"
+        },
+        {
+            "mot": "working",
+            "phoneme": "\u025c",
+            "phonetic": "/\u02c8w\u025c\u02d0k\u026a\u014b/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/working-us.mp3"
+        },
+        {
+            "mot": "smoking",
+            "phoneme": "\u014b",
+            "phonetic": "/\u02c8sm\u0259\u028ak\u026a\u014b/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/smoking-us.mp3"
+        },
+        {
+            "mot": "perfect",
+            "phoneme": "f",
+            "phonetic": "/\u02c8p\u025c\u02d0.f\u025bkt/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/perfect-1-us.mp3"
+        },
+        {
+            "mot": "afternoon",
+            "phoneme": "\u027e",
+            "phonetic": "/af.t\u0259\u027e\u02c8n\u0289\u02d0n/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/afternoon-us.mp3"
+        },
+        {
+            "mot": "due",
+            "phoneme": "\u0289",
+            "phonetic": "/d\u0292\u0289\u02d0/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/due-us.mp3"
+        },
+        {
+            "mot": "struggle",
+            "phoneme": "\u0261",
+            "phonetic": "/\u02c8str\u028c\u0261\u0259l/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/struggle-us.mp3"
+        },
+        {
+            "mot": "himself",
+            "phoneme": "h",
+            "phonetic": "/h\u026am\u02c8s\u025blf/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/himself-us.mp3"
+        },
+        {
+            "mot": "this",
+            "phoneme": "\u00f0",
+            "phonetic": "/\u00f0\u0259s/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/this-us.mp3"
+        },
+        {
+            "mot": "anything",
+            "phoneme": "\u03b8",
+            "phonetic": "/\u02c8\u025b.n\u0259.\u03b8\u026a\u014b/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/anything-us.mp3"
+        },
+        {
+            "mot": "app",
+            "phoneme": "\u0294",
+            "phonetic": "[\u0294\u00e6\u0294p\u031a]",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/app-us.mp3"
+        },
+        {
+            "mot": "bath",
+            "phoneme": "\u0250",
+            "phonetic": "/b\u0250\u02d0\u03b8/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/bath-us.mp3"
+        },
+        {
+            "mot": "borrow",
+            "phoneme": "o",
+            "phonetic": "/\u02c8b\u0254\u0279o\u028a/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/borrow-us.mp3"
+        },
+        {
+            "mot": "bowl",
+            "phoneme": "\u026b",
+            "phonetic": "/b\u0259\u028a\u026b/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/bowl-us.mp3"
+        },
+        {
+            "mot": "quarter",
+            "phoneme": "\u0258",
+            "phonetic": "/\u02c8ko\u02d0.t\u0258/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/quarter-us.mp3"
+        },
+        {
+            "mot": "camp",
+            "phoneme": "\u02b0",
+            "phonetic": "[k\u02b0\u025b\u0259mp]",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/camp-us.mp3"
+        },
+        {
+            "mot": "certain",
+            "phoneme": "\u025d",
+            "phonetic": "/\u02c8s\u025dtn\u0329/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/certain-us.mp3"
+        },
+        {
+            "mot": "distribute",
+            "phoneme": "\u0268",
+            "phonetic": "/d\u0268\u02c8st\u0279\u026abju\u02d0t/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/distribute-us.mp3"
+        },
+        {
+            "mot": "elsewhere",
+            "phoneme": "\u028d",
+            "phonetic": "/\u02cc\u025bls\u02c8\u028d\u025b\u02d0\u0259/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/elsewhere-us.mp3"
+        },
+        {
+            "mot": "first",
+            "phoneme": "r",
+            "phonetic": "/f\u026arst/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/first-us.mp3"
+        },
+        {
+            "mot": "girl",
+            "phoneme": "\u0275",
+            "phonetic": "/\u0261\u0275\u02d0l/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/girl-us.mp3"
+        },
+        {
+            "mot": "grass",
+            "phoneme": "\u00e4",
+            "phonetic": "[\u0261\u0279\u0320\u00e4\u02d0s]",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/grass-us.mp3"
+        },
+        {
+            "mot": "how",
+            "phoneme": "\u014f",
+            "phonetic": "/h\u00e6\u014f/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/how-us.mp3"
+        },
+        {
+            "mot": "adventure",
+            "phoneme": "\u025a",
+            "phonetic": "/\u00e6d\u02c8v\u025bnt\u0361\u0283\u025a/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/adventure-us.mp3"
+        },
+        {
+            "mot": "understand",
+            "phoneme": "\u025e",
+            "phonetic": "/\u02cc\u025end\u0259\u0279\u02c8stand/",
+            "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/understand-us.mp3"
+        }
+    ]
+}
