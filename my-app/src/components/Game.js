@@ -4,9 +4,8 @@ import raw from "../data.txt";
 import Word from "./Word";
 
 const Game = () => {
-  console.log("On crée un jeu !");
 
-  const [chosenWord, setChosenWord] = useState("blablabla");
+  const [chosenWord, setChosenWord] = useState("");
   //TODO
 
   const wordChoose = async () => {
@@ -14,8 +13,7 @@ const Game = () => {
     const text = await response.text();
     const wordList = text.split("\n");
     const word = wordList[Math.floor(Math.random() * wordList.length)];
-    console.log(wordList);
-    console.log("Choosen Word : " + word);
+    console.log("Chosen Word : " + word);
     setChosenWord((chosenWord) => word);
   };
 

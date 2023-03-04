@@ -65,7 +65,7 @@ const Letter = ({ lettre }) => {
     Http.send();
     Http.responseType = "json";
     Http.onload = () => {
-      if (Http.readyState == 4 && Http.status == 200) {
+      if (Http.readyState === 4 && Http.status === 200) {
         const data = Http.response;
 
         let extractedPhoneme = extractPhoneme(data);
@@ -99,10 +99,10 @@ const Letter = ({ lettre }) => {
     for (let i = 0; i < phoneme.length; i++) {
       var letter = phonemedictionnary[phoneme[i]]; //TODO
       console.log("letter : " + letter);
-      if (letter == "none") {
+      if (letter === "none") {
         continue;
       }
-      if (letter == "here") {
+      if (letter === "here") {
         stress = i;
         continue;
       }

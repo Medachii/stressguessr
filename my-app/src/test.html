@@ -76,9 +76,8 @@
         }
 
 
-        function getPhoneme(word) {
+        function getPhoneme(word, callback) {
             const Http = new XMLHttpRequest();
-
             const url = "https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word);
             Http.open("GET", url);
             Http.send();
@@ -88,53 +87,55 @@
                     const data = Http.response;
                     let extractedPhoneme = extractPhoneme(data);
                     console.log("extracted : " + extractedPhoneme);
-                    return extractedPhoneme;
+                    callback(extractedPhoneme);
                 }
             };
-
         }
 
         function findtheStress(word) {
             console.log("findtheStress");
             console.log("word : " + word);
-            const phoneme = getPhoneme(word);
-            sleep(5000);
-            
-            
-            console.log("pho" + phoneme);
-            let stress = 0;
-            let index = 1;
-            let traductedWord = "";
-            while (phoneme[index] != '/') {
-                //use the dictionnary to traduce phoneme into his word form, put it in traductedWord and ensure that traductedWord==word
+            const phoneme = getPhoneme(word, (phoneme) => {
+                console.log("pho" + phoneme);
+                let stress = 0;
+                let index = 1;
+                let traductedWord = "";
+                while (phoneme[index] != '/') {
+                    //use the dictionnary to traduce phoneme into his word form, put it in traductedWord and ensure that traductedWord==word
+                    console.log("lettre actuelle : " + phoneme[index]);
 
-
-                //test first taking the two next phonemes
-                let pho = phoneme[index];
-                if (index + 1 < phoneme.length) {
-                    let pho2 = phoneme[index + 1];
-                    if (pho + pho2 in phonemedictionnary) {
-                        pho = pho + pho2;
-                    }
-                }
-                let trad = phonemedictionnary[pho];
-                if (trad.length == 1) {
-                    traductedWord += trad[0];
-                }
-                else {
-                    //check the word given in parameter to find the good phoneme
-                    let i = 0;
-                    while (i < trad.length) {
-                        if (word.includes(trad[i])) {
-                            traductedWord += trad[i];
-                            break;
+                    //test first taking the two next phonemes
+                    let pho = phoneme[index];
+                    if (index + 1 < phoneme.length) {
+                        let pho2 = phoneme[index + 1];
+                        if (pho + pho2 in phonemedictionnary) {
+                            console.log("double phoneme");
+                            pho = pho + pho2;
                         }
-                        i++;
                     }
+                    let trad = phonemedictionnary[pho];
+                    console.log("pho + trad" + pho +" "+ trad);
+                    if (trad.length == 1) {
+                        traductedWord += trad[0];
+                    }
+                    else {
+                        //check the word given in parameter to find the good phoneme
+                        let i = 0;
+                        while (i < trad.length) {
+                            if (word.includes(trad[i])) {
+                                traductedWord += trad[i];
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+
                 }
-                console.log(traductedWord);
+                console.log("mot traduit : " + traductedWord);
                 return traductedWord;
-            }
+                callback();
+            });
+
 
         }
         function sleep(ms) {
