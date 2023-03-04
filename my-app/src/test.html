@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+
+<body>
+    <h1>Test</h1>
+    <p>Test</p>
+    <button onclick="test()"></button>
+    <script>
+        console.log("test");
+        const phonemedictionnary = {
+            '/': ['none'],
+            'h': ['h'],
+            'ə': ['e', 'a', 'ure', 'er', 'io', 'none'],
+            'l': ['l'],
+            'o': ['o'],
+            'ʊ': ['u', 'oul', 'none'],
+            '.': ['none'],
+            'ɪ': ['i'],
+            'l': ['l', 'le'],
+            'i': ['i', 'ee', 'ea'],
+            't': ['t', 'tt'],
+            'ˈ': ['here'],
+            'b': ['b'],
+            'ɑ': ['a'],
+            'æ': ['a'],
+            'e': ['e'],
+            'ɝ': ['ear', 'ur'],
+            'ɒ': ['o'],
+            'ʌ': ['u'],
+            'ɔ:': ['o', 'a', 'ou'],
+            'u': ['u', 'oo', 'ue'],
+            'ː': ['none'],
+            'aɪ': ['ai', 'i', 'eye'],
+            'aʊ': ['ow', 'ou'],
+            'eɪ': ['ay', 'ey', 'ei'],
+            'oʊ': ['o', 'ou', 'ow'],
+            'ɔɪ': ['oi', 'oy', 'oye'],
+            'ɛ': ['e', 'ea'],
+            'ɹ': ['r', 're'],
+            'd': ['d'],
+            'f': ['f'],
+            'g': ['g'],
+            'j': ['y', 'j'],
+            'k': ['k', 'c', 'ck'],
+            'm': ['m'],
+            'n': ['n'],
+            'ŋ': ['ng', 'n'],
+            'p': ['p'],
+            'r': ['r'],
+            's': ['s', 'ss'],
+            'ʃ': ['sh', 'ch'],
+            'tʃ': ['ch', 'tch'],
+            'θ': ['th'],
+            'ð': ['th'],
+            'v': ['v'],
+            'w': ['w'],
+            'z': ['z'],
+            'ʒ': ['zh', 'j', 's',],
+            'd͡ʒ': ['j', 'g', 'ge', 'dge']
+        }
+        function extractPhoneme(data) {
+            var phoneme = data[0].phonetics[0].text;
+            //tant que le phoneme est null
+            let i = 1;
+            while (phoneme == null) {
+                phoneme = data[0].phonetics[i].text;
+                i++;
+            }
+            return phoneme;
+
+        }
+
+
+        function getPhoneme(word) {
+            const Http = new XMLHttpRequest();
+
+            const url = "https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word);
+            Http.open("GET", url);
+            Http.send();
+            Http.responseType = "json";
+            Http.onload = () => {
+                if (Http.readyState == 4 && Http.status == 200) {
+                    const data = Http.response;
+                    let extractedPhoneme = extractPhoneme(data);
+                    console.log("extracted : " + extractedPhoneme);
+                    return extractedPhoneme;
+                }
+            };
+
+        }
+
+        function findtheStress(word) {
+            console.log("findtheStress");
+            console.log("word : " + word);
+            const phoneme = getPhoneme(word);
+            sleep(5000);
+            
+            
+            console.log("pho" + phoneme);
+            let stress = 0;
+            let index = 1;
+            let traductedWord = "";
+            while (phoneme[index] != '/') {
+                //use the dictionnary to traduce phoneme into his word form, put it in traductedWord and ensure that traductedWord==word
+
+
+                //test first taking the two next phonemes
+                let pho = phoneme[index];
+                if (index + 1 < phoneme.length) {
+                    let pho2 = phoneme[index + 1];
+                    if (pho + pho2 in phonemedictionnary) {
+                        pho = pho + pho2;
+                    }
+                }
+                let trad = phonemedictionnary[pho];
+                if (trad.length == 1) {
+                    traductedWord += trad[0];
+                }
+                else {
+                    //check the word given in parameter to find the good phoneme
+                    let i = 0;
+                    while (i < trad.length) {
+                        if (word.includes(trad[i])) {
+                            traductedWord += trad[i];
+                            break;
+                        }
+                        i++;
+                    }
+                }
+                console.log(traductedWord);
+                return traductedWord;
+            }
+
+        }
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        function test() {
+            findtheStress("hello");
+        }
+    </script>
+</body>
+
+</html>
