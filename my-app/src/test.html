@@ -15,18 +15,19 @@
         const phonemedictionnary = {
             '/': ['none'],
             'h': ['h'],
-            'ə': ['e', 'a', 'ure', 'er', 'io', 'none'],
+            'ə': ['e', 'a', 'ure', 'er', 'io','o',''],
             'l': ['l'],
             'o': ['o'],
-            'ʊ': ['u', 'oul', 'none'],
+            'ʊ': ['u', 'oul', 'o'],
             '.': ['none'],
             'ɪ': ['i'],
-            'l': ['l', 'le'],
+            'l': ['l', 'le', 'll'],
             'i': ['i', 'ee', 'ea'],
             't': ['t', 'tt'],
-            'ˈ': ['here'],
+            'ˈ': [''],
             'b': ['b'],
             'ɑ': ['a'],
+            'a': ['a'],
             'æ': ['a'],
             'e': ['e'],
             'ɝ': ['ear', 'ur'],
@@ -45,7 +46,7 @@
             'd': ['d'],
             'f': ['f'],
             'g': ['g'],
-            'j': ['y', 'j'],
+            'j': ['y', 'j',''],
             'k': ['k', 'c', 'ck'],
             'm': ['m'],
             'n': ['n'],
@@ -61,7 +62,10 @@
             'w': ['w'],
             'z': ['z'],
             'ʒ': ['zh', 'j', 's',],
-            'd͡ʒ': ['j', 'g', 'ge', 'dge']
+            'd͡ʒ': ['j', 'g', 'ge', 'dge'],
+            'ː': [''],
+            'ɡ': ['g'],
+            'g': ['g']
         }
         function extractPhoneme(data) {
             var phoneme = data[0].phonetics[0].text;
@@ -91,58 +95,77 @@
                 }
             };
         }
-
+        let stress = -2;
+        let wordFinished = false;
         function findtheStress(word) {
             console.log("findtheStress");
             console.log("word : " + word);
+
             const phoneme = getPhoneme(word, (phoneme) => {
-                console.log("pho" + phoneme);
-                let stress = 0;
+                console.log("pho " + phoneme);
+                
                 let index = 1;
-                let traductedWord = "";
-                while (phoneme[index] != '/') {
-                    //use the dictionnary to traduce phoneme into his word form, put it in traductedWord and ensure that traductedWord==word
-                    console.log("lettre actuelle : " + phoneme[index]);
+                let finalWord = "";
 
-                    //test first taking the two next phonemes
-                    let pho = phoneme[index];
-                    if (index + 1 < phoneme.length) {
-                        let pho2 = phoneme[index + 1];
-                        if (pho + pho2 in phonemedictionnary) {
-                            console.log("double phoneme");
-                            pho = pho + pho2;
-                        }
-                    }
-                    let trad = phonemedictionnary[pho];
-                    console.log("pho + trad" + pho +" "+ trad);
-                    if (trad.length == 1) {
-                        traductedWord += trad[0];
-                    }
-                    else {
-                        //check the word given in parameter to find the good phoneme
-                        let i = 0;
-                        while (i < trad.length) {
-                            if (word.includes(trad[i])) {
-                                traductedWord += trad[i];
-                                break;
-                            }
-                            i++;
-                        }
+                function findRecursiveStress(phoneme, index, wordToFind, finalWord) {
+                    console.log("----------------------------------------------------");
+                    console.log("findRecursiveStress");
+                    console.log("phoneme[index] : " + phoneme[index]);
+                    console.log("finalWord : " + finalWord);
+                    console.log("stress : " + stress);
+                    console.log("---------------------");
+
+                    if (wordFinished) {
+                        return;
                     }
 
+                    if (phoneme[index] == "/") {
+                        
+                        if (stress==-2){
+                            stress=-1;
+                        }
+                        wordFinished = true;
+                        console.log("stress non trouvé " + stress );
+                        return;
+                    }
+                    if (phoneme[index] == "ˈ") {
+                        console.log("stress trouvé");
+                        console.log("index : " + index);
+                        console.log("finalWord" + finalWord);
+                        if (index > stress) {
+                            stress = index;
+                        }
+                    }
+
+                    for (let i = 0; i < phonemedictionnary[phoneme[index]].length; i++) {
+                        console.log("boucle, index : " + index + ", phoneme : " + phoneme[index] + " traduction du phoeneme : " + phonemedictionnary[phoneme[index]][i]);
+                        let previousfinalWord = finalWord;
+                        finalWord = finalWord + phonemedictionnary[phoneme[index]][i]
+                        console.log("finalWord : " + finalWord);
+
+                        //if finalWord is not the same as beginning of wordToFind then don't recall the function
+                        if (wordToFind.startsWith(finalWord)) {
+                            console.log("Ca commence bien ");
+                            findRecursiveStress(phoneme, index + 1, wordToFind, finalWord);
+                        }
+                        finalWord = previousfinalWord;
+
+
+                    }
                 }
-                console.log("mot traduit : " + traductedWord);
-                return traductedWord;
+                console.log("wordToFind : " + word);
+                findRecursiveStress(phoneme, index, word, finalWord);
+                console.log("-----------------------------------------------------------------------");
+                console.log("final stress : " +(stress-1));
+                return;
                 callback();
             });
 
 
         }
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
+
         function test() {
-            findtheStress("hello");
+            findtheStress("glass");
         }
     </script>
 </body>
