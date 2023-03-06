@@ -15,26 +15,27 @@
         const phonemedictionnary = {
             '/': ['none'],
             'h': ['h'],
-            'ə': ['e', 'a', 'ure', 'er', 'io','o',''],
-            'l': ['l'],
+            'ə': ['e', 'a', 'ure', 'er', 'io', 'o', 're','ou', ''],
+            'l': ['l', 'le'],
             'o': ['o'],
-            'ʊ': ['u', 'oul', 'o'],
-            '.': ['none'],
-            'ɪ': ['i'],
+            'ʊ': ['u', 'oul', 'o','ugh'],
+            '.': [''],
+            'ɪ': ['i','a', 'e','u'],
             'l': ['l', 'le', 'll'],
-            'i': ['i', 'ee', 'ea'],
-            't': ['t', 'tt'],
+            'i': ['i', 'ee', 'ea', 'y','e'],
+            't': ['t', 'tt', 'te'],
             'ˈ': [''],
+            'ˌ': [''],
             'b': ['b'],
             'ɑ': ['a'],
-            'a': ['a'],
+            'a': ['a','o'],
             'æ': ['a'],
-            'e': ['e'],
+            'e': ['e', 'a'],
             'ɝ': ['ear', 'ur'],
             'ɒ': ['o'],
             'ʌ': ['u'],
             'ɔ:': ['o', 'a', 'ou'],
-            'u': ['u', 'oo', 'ue'],
+            'u': ['u', 'oo', 'ue','ough'],
             'ː': ['none'],
             'aɪ': ['ai', 'i', 'eye'],
             'aʊ': ['ow', 'ou'],
@@ -42,30 +43,34 @@
             'oʊ': ['o', 'ou', 'ow'],
             'ɔɪ': ['oi', 'oy', 'oye'],
             'ɛ': ['e', 'ea'],
-            'ɹ': ['r', 're'],
+            'ɜ': ['o', 'or'],
+            'ɹ': ['r', 're','rar'],
             'd': ['d'],
-            'f': ['f'],
+            'f': ['f','ph'],
             'g': ['g'],
-            'j': ['y', 'j',''],
-            'k': ['k', 'c', 'ck'],
+            'j': ['y', 'j', ''],
+            'k': ['k', 'c', 'ck', 'x','ch','q'],
             'm': ['m'],
             'n': ['n'],
             'ŋ': ['ng', 'n'],
-            'p': ['p'],
-            'r': ['r'],
-            's': ['s', 'ss'],
-            'ʃ': ['sh', 'ch'],
+            'p': ['p', 'pp'],
+            'r': ['r', 'rr'],
+            's': ['s', 'ss', ''],
+            'ʃ': ['sh', 'ch', 'ss', ''],
             'tʃ': ['ch', 'tch'],
             'θ': ['th'],
             'ð': ['th'],
             'v': ['v'],
-            'w': ['w'],
-            'z': ['z'],
+            'w': ['w','u'],
+            'z': ['z', 'x','s','si'],
             'ʒ': ['zh', 'j', 's',],
             'd͡ʒ': ['j', 'g', 'ge', 'dge'],
             'ː': [''],
-            'ɡ': ['g'],
-            'g': ['g']
+            'ɡ': ['g', 'gg', ''],
+            'g': ['g'],
+            '(': [''],
+            ')': [''],
+            'ɔ': ['o', 'a', 'ou'],
         }
         function extractPhoneme(data) {
             var phoneme = data[0].phonetics[0].text;
@@ -97,47 +102,51 @@
         }
         let stress = -2;
         let wordFinished = false;
+
         function findtheStress(word) {
             console.log("findtheStress");
             console.log("word : " + word);
 
             const phoneme = getPhoneme(word, (phoneme) => {
                 console.log("pho " + phoneme);
-                
                 let index = 1;
                 let finalWord = "";
 
                 function findRecursiveStress(phoneme, index, wordToFind, finalWord) {
+
+                    if (wordFinished==true) {
+                        return;
+                    }
+
                     console.log("----------------------------------------------------");
                     console.log("findRecursiveStress");
                     console.log("phoneme[index] : " + phoneme[index]);
                     console.log("finalWord : " + finalWord);
                     console.log("stress : " + stress);
+                    console.log("wordFinished : " + wordFinished);
                     console.log("---------------------");
-
-                    if (wordFinished) {
-                        return;
-                    }
-
                     if (phoneme[index] == "/") {
-                        
-                        if (stress==-2){
-                            stress=-1;
+
+                        if (stress == -2) {
+                            stress = -1;
                         }
                         wordFinished = true;
-                        console.log("stress non trouvé " + stress );
+                        console.log("stress non trouvé " + stress);
                         return;
                     }
                     if (phoneme[index] == "ˈ") {
                         console.log("stress trouvé");
                         console.log("index : " + index);
                         console.log("finalWord" + finalWord);
-                        if (index > stress) {
-                            stress = index;
+                        if (finalWord.length > stress) {
+                            stress = finalWord.length;
                         }
                     }
 
                     for (let i = 0; i < phonemedictionnary[phoneme[index]].length; i++) {
+                        if (wordFinished==true) {
+                            break;
+                        }
                         console.log("boucle, index : " + index + ", phoneme : " + phoneme[index] + " traduction du phoeneme : " + phonemedictionnary[phoneme[index]][i]);
                         let previousfinalWord = finalWord;
                         finalWord = finalWord + phonemedictionnary[phoneme[index]][i]
@@ -152,11 +161,17 @@
 
 
                     }
+
                 }
-                console.log("wordToFind : " + word);
-                findRecursiveStress(phoneme, index, word, finalWord);
+
+                if (phoneme.includes("ˈ")) {
+                    console.log("wordToFind : " + word);
+                    findRecursiveStress(phoneme, index, word, finalWord);
+                }
+
+
                 console.log("-----------------------------------------------------------------------");
-                console.log("final stress : " +(stress-1));
+                console.log("final stress : " + (stress));
                 return;
                 callback();
             });
@@ -165,7 +180,7 @@
         }
 
         function test() {
-            findtheStress("glass");
+            findtheStress("contemporary");
         }
     </script>
 </body>
