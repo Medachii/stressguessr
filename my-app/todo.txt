@@ -14,7 +14,9 @@ Numieow :
 -Faire le dictionnaire
 -Faire la doc
 
+A faire à la fin :
 
+-ENLEVER TOUS LES CONSOLE.LOG
 
 Ratio + pas lu :
 
