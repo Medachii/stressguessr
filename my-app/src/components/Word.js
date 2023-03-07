@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Letter from "./Letter";
 
-const Word = ({ chosenWord, updatePoints }) => {
+
+const Word = ({ chosenWord, updatePoints, updateStress }) => {
 
   const [finalStress,setFinalStress] = useState("");
 
@@ -164,6 +165,7 @@ const Word = ({ chosenWord, updatePoints }) => {
       console.log("-----------------------------------------------------------------------");
       console.log("final stress : " + (stress));
       setFinalStress((finalStress)=>stress);
+      updateStress(stress);
       return ;
       //callback(); //TODO ?
     });

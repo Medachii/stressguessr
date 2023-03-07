@@ -10,6 +10,7 @@ const Game = () => {
   const [gamePoints, setGamePoints] = useState(0);
   const [flag, setFlag] = useState(1);
   const [round, setRound] = useState(1);
+  const [stress, setStress] = useState(0);
 
 
   //TODO
@@ -57,11 +58,28 @@ const Game = () => {
     if (round == 10) {
       alert("You got " + gamePoints + " points !");
       newgame();
-      setRound((round) => 1);
+      
     }
 
   }
+  
+  function updateStress(stresss){
+    setStress((stress)=>stresss);
+  }
 
+  function nostress() {
+    if (flag == 1) {
+      console.log("No stress !" + stress);
+      if (stress <0) {
+        addPoints(10);
+      }
+      else {
+        addPoints(0);
+      }
+      document.getElementById("#next").style.display = "block";
+      setFlag((flag) => 0);
+    }
+  }
   //Equivalent à componentDidMount
   useEffect(() => {
     //TODO
@@ -77,12 +95,14 @@ const Game = () => {
       <h1>stressguessr</h1>
       <h2>Points : {gamePoints}</h2>
       <h2>Round : {round}/10</h2>
-      <Word chosenWord={chosenWord} updatePoints={addPoints} />
+      <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} />
+      <button onClick={nostress}>No Stress</button>
       <button onClick={newgame}>New Game</button>
       <button id="#next" onClick={next} style={{ display: "none" }}>Next</button>
     </div>
   );
 };
+
 
 export default Game;
 
