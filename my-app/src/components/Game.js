@@ -98,7 +98,6 @@ const Game = () => {
   return (
     <div className="game">
       <h1 class="gameTitle">stressguessr</h1>
-    
       <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} oskur={playing} oskur2={chosenWord} />
       <button onClick={nostress}>No Stress</button>
       <button onClick={newgame}>New Game</button>
