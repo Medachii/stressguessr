@@ -3,9 +3,9 @@ import Game from "./Game.js";
 
 
 
-const Letter = ({ index, lettre, stress, updatePoints, oskur,oskur2 }) => {
+const Letter = ({ index, lettre, stress, updatePoints, playing,chosenWord }) => {
 
-  const [bgcolor, setBgcolor] = useState("white");
+  const [bgcolor, setBgcolor] = useState("transparent");
 
 
 
@@ -24,11 +24,11 @@ const Letter = ({ index, lettre, stress, updatePoints, oskur,oskur2 }) => {
       setBgcolor((bgcolor) => "green");
     }
     
-  }, [oskur] );
+  }, [playing] );
 
   useEffect(() => {
-    setBgcolor((bgcolor) => "white");
-  }, [oskur2] );
+    setBgcolor((bgcolor) => "transparent");
+  }, [chosenWord] );
 
 
 

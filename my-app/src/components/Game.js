@@ -31,13 +31,13 @@ const Game = () => {
 
   function addPoints(points) {
     if (flag === 1) {
-      setPlaying((playing) => playing+1);
+      setPlaying((playing) => playing + 1);
       setGamePoints((gamePoints) => gamePoints + points);
       console.log("gamePoints : " + gamePoints);
       console.log("===============================================================================================");
       document.getElementById("#next").style.display = "block";
 
-    
+
 
 
       setFlag((flag) => 0);
@@ -62,20 +62,20 @@ const Game = () => {
     if (round === 10) {
       alert("You got " + gamePoints + " points !");
       newgame();
-      
+
     }
 
   }
 
-  function updateStress(stresss){
-    setStress((stress)=>stresss);
-    
+  function updateStress(stresss) {
+    setStress((stress) => stresss);
+
   }
 
   function nostress() {
     if (flag === 1) {
       console.log("No stress !" + stress);
-      if (stress <0) {
+      if (stress < 0) {
         addPoints(10);
       }
       else {
@@ -92,20 +92,22 @@ const Game = () => {
     wordChoose();
   }, []);
 
-  
+
 
 
   return (
     <div className="game">
       <h1 class="gameTitle">stressguessr</h1>
-    
-      <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} oskur={playing} oskur2={chosenWord} />
-      <button onClick={nostress}>No Stress</button>
+
+      <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} playing={playing}  />
+      <button onClick={nostress} class="nostressbutton">No Stress</button>
+
+
       <button onClick={newgame}>New Game</button>
       <a class="points">Points : {gamePoints}</a>
       <button class="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>
       <a class="round">Round : {round}/10</a>
-      
+
     </div>
   );
 };

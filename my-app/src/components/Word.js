@@ -3,11 +3,11 @@ import Letter from "./Letter";
 import "../index.css";
 
 
-const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
+const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   const [finalStress, setFinalStress] = useState("");
   const [definition, setDefinition] = useState("");
-
+  const [displayNoStress, setDisplayNoStress] = useState("transparent");
 
 
   const phonemedictionnary = {
@@ -17,7 +17,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
     'o': ['o'],
     'ʊ': ['u', 'oul', 'o', 'ugh'],
     '.': [''],
-    'ɪ': ['i', 'a', 'e', 'u'],
+    'ɪ': ['i', 'a', 'e', 'u', ''],
     'l': ['l', 'le', 'll'],
     'i': ['i', 'ee', 'ea', 'y', 'e'],
     't': ['t', 'tt', 'te', ''],
@@ -25,7 +25,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
     'ˌ': [''],
     'b': ['b', 'bb'],
     'ɑ': ['a'],
-    'a': ['a', 'o'],
+    'a': ['a', 'o', ''],
     'æ': ['a'],
     'e': ['e', 'a'],
     'ɝ': ['ear', 'ur'],
@@ -69,6 +69,8 @@ const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
     'ɚ': ['ar', 'er'],
     'ɘ': ['e', 'a', 'o'],
     'ɵ': ['ir'],
+    't͡': ['t','tur'],
+    'l̩': ['l', 'le'],
   }
   function extractPhoneme(data) {
     var phoneme = data[0].phonetics[0].text;
@@ -186,12 +188,19 @@ const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
 
   }
 
+  useEffect(() => {
+    if (finalStress < 0) {
+      setDisplayNoStress((displayNoStress) => "block");
+    }
+
+  }, [playing]);
 
 
 
 
   useEffect(() => {
     findtheStress(chosenWord);
+    setDisplayNoStress((displayNoStress) => "none");
     console.log("finalStress : " + finalStress);
   }, [chosenWord]);
 
@@ -202,11 +211,12 @@ const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
 
       <div className="wordcontainer">
         {chosenWord.split("").map((letter, index) => (
-          <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints} oskur={oskur} oskur2={oskur2} />
+          <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints} playing={playing} chosenWord={chosenWord} />
 
         ))}
       </div>
       <p class="definition">{definition}</p>
+      <p class="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
 
     </div>
   );
