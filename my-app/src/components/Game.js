@@ -97,13 +97,15 @@ const Game = () => {
 
   return (
     <div className="game">
-      <h1>stressguessr</h1>
-      <h2>Points : {gamePoints}</h2>
-      <h2>Round : {round}/10</h2>
+      <h1 class="gameTitle">stressguessr</h1>
+    
       <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} oskur={playing} oskur2={chosenWord} />
       <button onClick={nostress}>No Stress</button>
       <button onClick={newgame}>New Game</button>
-      <button id="#next" onClick={next} style={{ display: "none" }}>Next</button>
+      <a class="points">Points : {gamePoints}</a>
+      <button class="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>
+      <a class="round">Round : {round}/10</a>
+      
     </div>
   );
 };

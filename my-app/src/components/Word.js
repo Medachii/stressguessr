@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Letter from "./Letter";
+import "../index.css";
 
 
-const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
+const Word = ({ chosenWord, updatePoints, updateStress, oskur, oskur2 }) => {
 
-  const [finalStress,setFinalStress] = useState("");
-  const [definition,setDefinition] = useState("");
-  
+  const [finalStress, setFinalStress] = useState("");
+  const [definition, setDefinition] = useState("");
+
 
 
   const phonemedictionnary = {
@@ -19,10 +20,10 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
     'ɪ': ['i', 'a', 'e', 'u'],
     'l': ['l', 'le', 'll'],
     'i': ['i', 'ee', 'ea', 'y', 'e'],
-    't': ['t', 'tt', 'te',''],
+    't': ['t', 'tt', 'te', ''],
     'ˈ': [''],
     'ˌ': [''],
-    'b': ['b','bb'],
+    'b': ['b', 'bb'],
     'ɑ': ['a'],
     'a': ['a', 'o'],
     'æ': ['a'],
@@ -38,20 +39,20 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
     'oʊ': ['o', 'ou', 'ow'],
     'ɔɪ': ['oi', 'oy', 'oye'],
     'ɛ': ['e', 'ea'],
-    'ɜ': ['o', 'or','er'],
+    'ɜ': ['o', 'or', 'er'],
     'ɹ': ['r', 're', 'rar'],
     'd': ['d'],
-    'f': ['f', 'ph','ff'],
+    'f': ['f', 'ph', 'ff'],
     'g': ['g'],
     'j': ['y', 'j', ''],
-    'k': ['k', 'c', 'ck', 'x', 'ch', 'q','xh'],
+    'k': ['k', 'c', 'ck', 'x', 'ch', 'q', 'xh'],
     'm': ['m'],
     'n': ['n'],
     'ŋ': ['ng', 'n'],
     'p': ['p', 'pp'],
     'r': ['r', 'rr'],
-    's': ['s', 'ss','ce', ''],
-    'ʃ': ['sh', 'ch', 'ss','t', ''],
+    's': ['s', 'ss', 'ce', ''],
+    'ʃ': ['sh', 'ch', 'ss', 't', ''],
     'tʃ': ['ch', 'tch'],
     'θ': ['th'],
     'ð': ['th'],
@@ -66,7 +67,7 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
     ')': [''],
     'ɔ': ['o', 'a', 'ou'],
     'ɚ': ['ar', 'er'],
-    'ɘ': ['e', 'a','o'],
+    'ɘ': ['e', 'a', 'o'],
     'ɵ': ['ir'],
   }
   function extractPhoneme(data) {
@@ -81,7 +82,7 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
 
   }
 
-  function extractDefinition(data){
+  function extractDefinition(data) {
     let definition = data[0].meanings[0].definitions[0].definition;
     console.log("definition : " + definition);
     return definition;
@@ -99,7 +100,7 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
         const data = Http.response;
         let extractedPhoneme = extractPhoneme(data);
         let extractedDefinition = extractDefinition(data);
-        setDefinition((definition)=>extractedDefinition);
+        setDefinition((definition) => extractedDefinition);
         //console.log("extracted : " + extractedPhoneme);
         callback(extractedPhoneme);
       }
@@ -177,18 +178,18 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
 
       //console.log("-----------------------------------------------------------------------");
       //console.log("final stress : " + (stress));
-      setFinalStress((finalStress)=>stress);
+      setFinalStress((finalStress) => stress);
       updateStress(stress);
-      return ;
+      return;
       //callback(); //TODO ?
     });
 
   }
- 
 
- 
 
-  
+
+
+
   useEffect(() => {
     findtheStress(chosenWord);
     console.log("finalStress : " + finalStress);
@@ -198,14 +199,15 @@ const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
 
   return (
     <div className="word">
-      <h2>
 
+      <div className="wordcontainer">
         {chosenWord.split("").map((letter, index) => (
           <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints} oskur={oskur} oskur2={oskur2} />
-          
+
         ))}
-        <p>{definition}</p>
-      </h2>
+      </div>
+      <p class="definition">{definition}</p>
+
     </div>
   );
 };
