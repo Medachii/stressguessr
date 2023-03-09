@@ -1,8 +1,6 @@
 
 N2L :
 
--Montrer la correction après avoir appuyer sur une flèche (colorer la bonne lettre)
--Définition du mot à afficher
 -Rendre le site beau
 -Bcp tester
 

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Letter from "./Letter";
 
 
-const Word = ({ chosenWord, updatePoints, updateStress }) => {
+const Word = ({ chosenWord, updatePoints, updateStress,oskur,oskur2 }) => {
 
   const [finalStress,setFinalStress] = useState("");
+  const [definition,setDefinition] = useState("");
+  
 
 
   const phonemedictionnary = {
@@ -20,7 +22,7 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
     't': ['t', 'tt', 'te',''],
     'ˈ': [''],
     'ˌ': [''],
-    'b': ['b'],
+    'b': ['b','bb'],
     'ɑ': ['a'],
     'a': ['a', 'o'],
     'æ': ['a'],
@@ -36,20 +38,20 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
     'oʊ': ['o', 'ou', 'ow'],
     'ɔɪ': ['oi', 'oy', 'oye'],
     'ɛ': ['e', 'ea'],
-    'ɜ': ['o', 'or'],
+    'ɜ': ['o', 'or','er'],
     'ɹ': ['r', 're', 'rar'],
     'd': ['d'],
     'f': ['f', 'ph','ff'],
     'g': ['g'],
     'j': ['y', 'j', ''],
-    'k': ['k', 'c', 'ck', 'x', 'ch', 'q'],
+    'k': ['k', 'c', 'ck', 'x', 'ch', 'q','xh'],
     'm': ['m'],
     'n': ['n'],
     'ŋ': ['ng', 'n'],
     'p': ['p', 'pp'],
     'r': ['r', 'rr'],
     's': ['s', 'ss','ce', ''],
-    'ʃ': ['sh', 'ch', 'ss', ''],
+    'ʃ': ['sh', 'ch', 'ss','t', ''],
     'tʃ': ['ch', 'tch'],
     'θ': ['th'],
     'ð': ['th'],
@@ -65,6 +67,7 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
     'ɔ': ['o', 'a', 'ou'],
     'ɚ': ['ar', 'er'],
     'ɘ': ['e', 'a','o'],
+    'ɵ': ['ir'],
   }
   function extractPhoneme(data) {
     var phoneme = data[0].phonetics[0].text;
@@ -77,6 +80,14 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
     return phoneme;
 
   }
+
+  function extractDefinition(data){
+    let definition = data[0].meanings[0].definitions[0].definition;
+    console.log("definition : " + definition);
+    return definition;
+  }
+
+
   function getPhoneme(word, callback) {
     const Http = new XMLHttpRequest();
     const url = "https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word);
@@ -87,7 +98,9 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
       if (Http.readyState === 4 && Http.status === 200) {
         const data = Http.response;
         let extractedPhoneme = extractPhoneme(data);
-        console.log("extracted : " + extractedPhoneme);
+        let extractedDefinition = extractDefinition(data);
+        setDefinition((definition)=>extractedDefinition);
+        //console.log("extracted : " + extractedPhoneme);
         callback(extractedPhoneme);
       }
     };
@@ -96,11 +109,11 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
   let wordFinished = false;
 
   function findtheStress(word) {
-    console.log("findtheStress");
-    console.log("word : " + word);
+    //console.log("findtheStress");
+    //console.log("word : " + word);
 
     const phoneme = getPhoneme(word, (phoneme) => {
-      console.log("pho " + phoneme);
+      //console.log("pho " + phoneme);
       let index = 1;
       let finalWord = "";
 
@@ -110,26 +123,26 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
           return;
         }
 
-        console.log("----------------------------------------------------");
-        console.log("findRecursiveStress");
-        console.log("phoneme[index] : " + phoneme[index]);
-        console.log("finalWord : " + finalWord);
-        console.log("stress : " + stress);
-        console.log("wordFinished : " + wordFinished);
-        console.log("---------------------");
+        //console.log("----------------------------------------------------");
+        //console.log("findRecursiveStress");
+        //console.log("phoneme[index] : " + phoneme[index]);
+        //console.log("finalWord : " + finalWord);
+        //console.log("stress : " + stress);
+        //console.log("wordFinished : " + wordFinished);
+        //console.log("---------------------");
         if (phoneme[index] === "/") {
 
           if (stress === -2) {
             stress = -1;
           }
           wordFinished = true;
-          console.log("stress non trouvé " + stress);
+          //console.log("stress non trouvé " + stress);
           return;
         }
         if (phoneme[index] === "ˈ") {
-          console.log("stress trouvé");
-          console.log("index : " + index);
-          console.log("finalWord" + finalWord);
+          //console.log("stress trouvé");
+          //console.log("index : " + index);
+          //console.log("finalWord" + finalWord);
           if (finalWord.length > stress) {
             stress = finalWord.length;
           }
@@ -139,14 +152,14 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
           if (wordFinished === true) {
             break;
           }
-          console.log("boucle, index : " + index + ", phoneme : " + phoneme[index] + " traduction du phoeneme : " + phonemedictionnary[phoneme[index]][i]);
+          //console.log("boucle, index : " + index + ", phoneme : " + phoneme[index] + " traduction du phoeneme : " + phonemedictionnary[phoneme[index]][i]);
           let previousfinalWord = finalWord;
           finalWord = finalWord + phonemedictionnary[phoneme[index]][i]
-          console.log("finalWord : " + finalWord);
+          //console.log("finalWord : " + finalWord);
 
           //if finalWord is not the same as beginning of wordToFind then don't recall the function
           if (wordToFind.startsWith(finalWord)) {
-            console.log("Ca commence bien ");
+            //console.log("Ca commence bien ");
             findRecursiveStress(phoneme, index + 1, wordToFind, finalWord);
           }
           finalWord = previousfinalWord;
@@ -157,13 +170,13 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
       }
 
       if (phoneme.includes("ˈ")) {
-        console.log("wordToFind : " + word);
+        //console.log("wordToFind : " + word);
         findRecursiveStress(phoneme, index, word, finalWord);
       }
 
 
-      console.log("-----------------------------------------------------------------------");
-      console.log("final stress : " + (stress));
+      //console.log("-----------------------------------------------------------------------");
+      //console.log("final stress : " + (stress));
       setFinalStress((finalStress)=>stress);
       updateStress(stress);
       return ;
@@ -171,11 +184,15 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
     });
 
   }
+ 
+
+ 
+
   
   useEffect(() => {
     findtheStress(chosenWord);
+    console.log("finalStress : " + finalStress);
   }, [chosenWord]);
-
 
 
 
@@ -184,9 +201,10 @@ const Word = ({ chosenWord, updatePoints, updateStress }) => {
       <h2>
 
         {chosenWord.split("").map((letter, index) => (
-          <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints}/>
+          <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints} oskur={oskur} oskur2={oskur2} />
           
         ))}
+        <p>{definition}</p>
       </h2>
     </div>
   );

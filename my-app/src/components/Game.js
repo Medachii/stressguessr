@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../index.css";
 import raw from "../data.txt";
 import Word from "./Word";
-import styled from "styled-components";
 
 const Game = () => {
 
@@ -11,6 +10,7 @@ const Game = () => {
   const [flag, setFlag] = useState(1);
   const [round, setRound] = useState(1);
   const [stress, setStress] = useState(0);
+  const [playing, setPlaying] = useState(0);
 
 
   //TODO
@@ -30,11 +30,15 @@ const Game = () => {
 
 
   function addPoints(points) {
-    if (flag == 1) {
+    if (flag === 1) {
+      setPlaying((playing) => playing+1);
       setGamePoints((gamePoints) => gamePoints + points);
       console.log("gamePoints : " + gamePoints);
       console.log("===============================================================================================");
       document.getElementById("#next").style.display = "block";
+
+    
+
 
       setFlag((flag) => 0);
     }
@@ -55,20 +59,21 @@ const Game = () => {
     document.getElementById("#next").style.display = "none";
     setFlag((flag) => 1);
     setRound((round) => round + 1);
-    if (round == 10) {
+    if (round === 10) {
       alert("You got " + gamePoints + " points !");
       newgame();
       
     }
 
   }
-  
+
   function updateStress(stresss){
     setStress((stress)=>stresss);
+    
   }
 
   function nostress() {
-    if (flag == 1) {
+    if (flag === 1) {
       console.log("No stress !" + stress);
       if (stress <0) {
         addPoints(10);
@@ -87,7 +92,7 @@ const Game = () => {
     wordChoose();
   }, []);
 
-
+  
 
 
   return (
@@ -95,14 +100,14 @@ const Game = () => {
       <h1>stressguessr</h1>
       <h2>Points : {gamePoints}</h2>
       <h2>Round : {round}/10</h2>
-      <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} />
+      <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} oskur={playing} oskur2={chosenWord} />
       <button onClick={nostress}>No Stress</button>
       <button onClick={newgame}>New Game</button>
       <button id="#next" onClick={next} style={{ display: "none" }}>Next</button>
     </div>
   );
 };
+//use addPoint to another file
 
 
 export default Game;
-
