@@ -1,4 +1,5 @@
 import React from "react";
+import './ListeMots.css';
 
 function ListeMots({ entries }) {
   function readAudio(link) {
@@ -8,7 +9,7 @@ function ListeMots({ entries }) {
   }
 
   return (
-    <div>
+    <div className="list">
       <table>
         <thead>
           <tr>
@@ -25,7 +26,9 @@ function ListeMots({ entries }) {
               <td>{entry.mot}</td>
               <td>{entry.phonetic}</td>
               <td>
-                <button onClick={() => readAudio(entry.audio)}>Listen</button>
+                <button onClick={() => readAudio(entry.audio)}>
+                    <img src="./src/images/black-speaker.png" alt="audio" height="90" width="100"/>
+                </button>
               </td>
             </tr>
           ))}

@@ -1,0 +1,12 @@
+.window, body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    color: white;
+    margin: 0;
+    font-weight: bold;
+    font-size: large;
+    background-color: #743a69;
+}
+table.list {
+    margin-left: auto;
+    margin-right: auto;
+  }

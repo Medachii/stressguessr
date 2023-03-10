@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ListeMots from './ListeMots';
 import mots from '../dictionary.json';
+import './dictionary.css'
 
 function Dictionnaire() {
 
