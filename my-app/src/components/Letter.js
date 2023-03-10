@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forceUpdate } from "react";
 import Game from "./Game.js";
 
 
@@ -32,6 +32,7 @@ const Letter = ({ index, lettre, stress, updatePoints, playing, chosenWord }) =>
 
   useEffect(() => {
     setBgcolor((bgcolor) => "transparent");
+
   }, [chosenWord]);
 
 
