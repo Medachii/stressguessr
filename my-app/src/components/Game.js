@@ -102,7 +102,7 @@ const Game = () => {
 
       <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} playing={playing}  />
       <button onClick={nostress} class="nostressbutton">No Stress</button>
-      <button onClick={newgame}>New Game</button>
+      <button onClick={newgame} class="newgamebutton">New Game</button>
       <a class="points">Points : {gamePoints}</a>
       <button class="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>
       <a class="round">Round : {round}/10</a>
