@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Game from "./Game.js";
 
 
 
-const Letter = ({ index, lettre, stress, updatePoints, playing,chosenWord }) => {
+const Letter = ({ index, lettre, stress, updatePoints, playing, chosenWord }) => {
 
   const [bgcolor, setBgcolor] = useState("transparent");
 
@@ -11,31 +11,35 @@ const Letter = ({ index, lettre, stress, updatePoints, playing,chosenWord }) => 
 
   const letterPushed = () => {
     console.log("index : " + index + ", lettre : " + lettre + ", stress : " + stress);
-  
-    updatePoints(10-(Math.abs(index-stress)));
-  
+    if (stress < 0) {
+      updatePoints(0);
+    }
+    else {
+      updatePoints(10 - (Math.abs(index - stress)));
+    }
+
   };
 
   useEffect(() => {
-    console.log("UseState triggered " + index + " " + stress );
+    console.log("UseState triggered " + index + " " + stress);
 
     if (index === stress) {
       console.log("Changement de couleur");
       setBgcolor((bgcolor) => "green");
     }
-    
-  }, [playing] );
+
+  }, [playing]);
 
   useEffect(() => {
     setBgcolor((bgcolor) => "transparent");
-  }, [chosenWord] );
+  }, [chosenWord]);
 
 
 
   return (
-    <button className="letter" onClick={letterPushed} style={{backgroundColor : bgcolor }}>
+    <a className="letter" onClick={letterPushed} style={{ backgroundColor: bgcolor }}>
       {lettre}
-    </button>
+    </a>
   );
 };
 
