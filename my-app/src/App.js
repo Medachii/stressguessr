@@ -8,8 +8,8 @@ import Dictionary from "./components/Dictionnaire";
 
 const App = () => {
   return (
-    <div class="window">
-      <div class="navbar">
+    <div className="window">
+      <div className="navbar">
         <nav>
           <ul>
             <li>
