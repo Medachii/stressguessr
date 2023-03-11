@@ -11,6 +11,7 @@ const Game = () => {
   const [round, setRound] = useState(1);
   const [stress, setStress] = useState(0);
   const [playing, setPlaying] = useState(0);
+  const [displayNoStress, setDisplayNoStress] = useState("block");
 
 
   //TODO
@@ -36,7 +37,7 @@ const Game = () => {
       //console.log("gamePoints : " + gamePoints);
       //console.log("===============================================================================================");
       document.getElementById("#next").style.display = "block";
-
+      setDisplayNoStress((displayNoStress) => "none");
 
 
 
@@ -52,6 +53,7 @@ const Game = () => {
     document.getElementById("#next").style.display = "none";
     setFlag((flag) => 1);
     setRound((round) => 1);
+    setDisplayNoStress((displayNoStress) => "block");
   }
 
   function next() {
@@ -59,11 +61,13 @@ const Game = () => {
     document.getElementById("#next").style.display = "none";
     setFlag((flag) => 1);
     setRound((round) => round + 1);
+    setDisplayNoStress((displayNoStress) => "block");
     if (round === 10) {
       alert("You got " + gamePoints + " points !");
       newgame();
 
     }
+  
 
   }
 
@@ -101,7 +105,7 @@ const Game = () => {
 
 
       <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} playing={playing}  />
-      <button onClick={nostress} className="nostressbutton">No Stress</button>
+      <button onClick={nostress} style={{display : displayNoStress}} className="nostressbutton">No Stress</button>
       <button onClick={newgame} className="newgamebutton">New Game</button>
       <a className="points">Points : {gamePoints}</a>
       <button className="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>

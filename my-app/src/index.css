@@ -158,6 +158,16 @@ ul {
 }
 
 .pronunciation{
-  position: relative;
+  position : relative;
+  left : 42%;
+  top : 50px;
+
+  max-width: 80px;
+  max-height: 80px;
   font-size : 20px;
+}
+
+.nostres{
+  position :relative;
+  top : 50px;
 }

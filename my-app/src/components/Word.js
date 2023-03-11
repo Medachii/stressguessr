@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, readAudio } from "react";
 import Letter from "./Letter";
 import "../index.css";
 
@@ -260,6 +260,8 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   }
 
+
+
   useEffect(() => {
     if (finalStress < 0) {
       setDisplayNoStress((displayNoStress) => "block");
@@ -292,8 +294,9 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
         ))}
       </div>
       <p className="definition">{definition}</p>
-      <p className="pronunciation" style={{ display: displaySound }}><audio controls src={pronunciation} style={{ display: displaySound }} /></p>
+      
       <p className="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
+      <p className="pronunciation" style={{ display: displaySound }}><audio controls src={pronunciation} /></p>
 
     </div>
   );
