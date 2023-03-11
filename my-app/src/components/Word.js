@@ -7,60 +7,64 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   const [finalStress, setFinalStress] = useState("");
   const [definition, setDefinition] = useState("");
+  const [pronunciation, setPronunciation] = useState("");
+  const [existingSound, setExistingSound] = useState(false);
   const [displayNoStress, setDisplayNoStress] = useState("transparent");
+  const [displaySound, setDisplaySound] = useState("transparent");
+  const [whichPhoneme, setWhichPhoneme] = useState(0);
 
 
   const phonemedictionnary = {
     '/': ['none'],
     'h': ['h'],
-    'ə': ['e','u', 'a', 'ure', 'er', 'io', 'o', 're', 'ou', ''],
+    'ə': ['e', 'u', 'a', 'ure', 'er', 'io', 'o', 're', 'ou', ''],
     'o': ['o'],
-    'ʊ': ['u', 'oul', 'o', 'ugh'],
+    'ʊ': ['u', 'oul', 'o', 'ugh',''],
     '.': [''],
-    'ɪ': ['i', 'a', 'e', 'u','ye','y', ''],
+    'ɪ': ['i', 'a', 'e', 'u', 'ye', 'y', ''],
     'l': ['l', 'le', 'll'],
     'i': ['i', 'ee', 'ea', 'y', 'e'],
     't': ['t', 'tt', 'te', ''],
     'ˈ': [''],
     'ˌ': [''],
     'b': ['b', 'bb'],
-    'ɑ': ['a','o'],
+    'ɑ': ['a', 'o'],
     'a': ['a', 'o', ''],
     'æ': ['a'],
     'e': ['e', 'a'],
     'ɝ': ['ear', 'ur'],
-    'ɒ': ['o'],
-    'ʌ': ['u'],
+    'ɒ': ['o', 'a'],
+    'ʌ': ['u', 'o'],
     'ɔ:': ['o', 'a', 'ou'],
-    'u': ['u','ou', 'oo', 'ue', 'ough'],
+    'u': ['u', 'ou', 'oo', 'ue', 'ough'],
     'aɪ': ['ai', 'i', 'eye'],
     'aʊ': ['ow', 'ou'],
     'eɪ': ['ay', 'ey', 'ei'],
     'oʊ': ['o', 'ou', 'ow'],
     'ɔɪ': ['oi', 'oy', 'oye'],
     'ɛ': ['e', 'ea'],
-    'ɜ': ['o', 'or', 'er'],
+    'ɜ': ['o', 'e', 'or', 'er'],
     'ɹ': ['r', 're', 'rar'],
     'd': ['d'],
     'f': ['f', 'ph', 'ff'],
     'g': ['g'],
-    'j': ['y', 'j', ''],
-    'k': ['k', 'c', 'ck', 'x', 'ch', 'q', 'xh','ke'],
+    'j': ['y', 'j','i', ''],
+    'k': ['k', 'c', 'ck', 'x', 'ch', 'q', 'xh', 'ke'],
     'm': ['m'],
     'n': ['n'],
     'ŋ': ['ng', 'n'],
     'p': ['p', 'pp'],
     'r': ['r', 'rr'],
-    's': ['s', 'ss', 'ce', ''],
+    's': ['s', 'ss', 'ce', 'se', ''],
     'ʃ': ['sh', 'ch', 'ss', 't', ''],
     'tʃ': ['ch', 'tch'],
     'θ': ['th'],
     'ð': ['th'],
-    'v': ['v'],
+    'v': ['v', 've'],
     'w': ['w', 'u'],
-    'z': ['z', 'x', 's', 'si'],
-    'ʒ': ['zh', 'j', 's',''],
-    'd͡': ['j', 'g', 'ge', 'dge'],
+    'z': ['z', 'x', 's', 'si', 'se'],
+    'ʒ': ['zh', 'j', 's', ''],
+    'd͡': ['j', 'g', 'ge', 'dge','gg'],
     'ː': [''],
     'ɡ': ['g', 'gg', ''],
     '(': [''],
@@ -69,17 +73,76 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     'ɚ': ['ar', 'er'],
     'ɘ': ['e', 'a', 'o'],
     'ɵ': ['ir'],
-    't͡': ['t','tur'],
+    't͡': ['t', 'tur'],
     'l̩': ['l', 'le'],
+    'ä' : ['a'],
+    'ʰ': [''],
+    '[': [''],
+    ']': [''],
   }
   function extractPhoneme(data) {
-    var phoneme = data[0].phonetics[0].text;
+    console.log("===================================================");
+    
+    let a = 0;
+    let phoneme = data[0].phonetics[0].text;
+    var phonemeAudio = data[0].phonetics[0].audio;
+    
     //tant que le phoneme est null
     let i = 1;
-    while (phoneme == null) {
-      phoneme = data[0].phonetics[i].text;
+    while (phonemeAudio == "") {
+
+      
+      if (data[0].phonetics[i] == undefined) {
+        console.log("Audio non trouvé");
+        a += 1;
+        break;
+      }
+
+      if (data[0].phonetics[i].audio == undefined) {
+        phonemeAudio = "";
+      }
+      else {
+        phonemeAudio = data[0].phonetics[i].audio;
+      }
+      console.log("phonemeAudio : " + phonemeAudio + " i : " + i);
+      //break if data[0].phoenetics[i] is undefined
+      if (phonemeAudio != "" && data[0].phonetics[i].text == undefined) {
+        phonemeAudio = "";
+      }
+      /* else {
+        console.log("Break du au trouvage de l'audio");
+        break;
+      } */
       i++;
+
     }
+
+
+
+    if (a === 0) {
+      console.log(i-1);
+      phoneme = data[0].phonetics[i-1].text;
+      setWhichPhoneme((whichPhoneme) => i-1);
+      setPronunciation((pronunciation) => data[0].phonetics[i-1].audio);
+      setExistingSound((existingSound) => true);
+      console.log("audio trouvé : " + i-1);
+    }
+    else {
+      let k = 0;
+      phoneme = data[0].phonetics[0].text;
+      //tant que le phoneme est null
+
+      while (phoneme == null) {
+        k++;
+        phoneme = data[0].phonetics[k].text;
+
+      }
+      setWhichPhoneme((whichPhoneme) => k);
+      setExistingSound((existingSound) => false);
+      setPronunciation((pronunciation) => "");
+      console.log("audio non trouvé, phoneme : " + k);
+    }
+
     return phoneme;
 
   }
@@ -88,6 +151,13 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     let definition = data[0].meanings[0].definitions[0].definition;
     console.log("definition : " + definition);
     return definition;
+  }
+
+  function extractPronunciation(data) {
+    console.log("whichPhoneme : " + whichPhoneme);
+    let pronunciation = data[0].phonetics[whichPhoneme].audio;
+    console.log(" pronunciation : " + pronunciation);
+    return pronunciation;
   }
 
 
@@ -102,7 +172,9 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
         const data = Http.response;
         let extractedPhoneme = extractPhoneme(data);
         let extractedDefinition = extractDefinition(data);
+        //let extractedPronunciation = extractPronunciation(data);
         setDefinition((definition) => extractedDefinition);
+
         //console.log("extracted : " + extractedPhoneme);
         callback(extractedPhoneme);
       }
@@ -133,7 +205,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
         //console.log("stress : " + stress);
         //console.log("wordFinished : " + wordFinished);
         //console.log("---------------------");
-        if (phoneme[index] === "/") {
+        if (phoneme[index] === "/" || phoneme[index] === "]") {
 
           if (stress === -2) {
             stress = -1;
@@ -192,6 +264,9 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     if (finalStress < 0) {
       setDisplayNoStress((displayNoStress) => "block");
     }
+    if (existingSound === true) {
+      setDisplaySound((displaySound) => "block");
+    }
 
   }, [playing]);
 
@@ -201,7 +276,8 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
   useEffect(() => {
     findtheStress(chosenWord);
     setDisplayNoStress((displayNoStress) => "none");
-    console.log("finalStress : " + finalStress);
+    setDisplaySound((displaySound) => "none");
+    //console.log("finalStress : " + finalStress);
   }, [chosenWord]);
 
 
@@ -215,8 +291,9 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
         ))}
       </div>
-      <p class="definition">{definition}</p>
-      <p class="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
+      <p className="definition">{definition}</p>
+      <p className="pronunciation" style={{ display: displaySound }}><audio controls src={pronunciation} style={{ display: displaySound }} /></p>
+      <p className="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
 
     </div>
   );

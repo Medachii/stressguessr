@@ -10,21 +10,26 @@ const Letter = ({ index, lettre, stress, updatePoints, playing, chosenWord }) =>
 
 
   const letterPushed = () => {
-    console.log("index : " + index + ", lettre : " + lettre + ", stress : " + stress);
+    //console.log("index : " + index + ", lettre : " + lettre + ", stress : " + stress);
     if (stress < 0) {
       updatePoints(0);
     }
     else {
-      updatePoints(10 - (Math.abs(index - stress)));
+      let pointToAdd = 10 - 3 * (Math.abs(index - stress));
+      if (pointToAdd < 0) {
+        pointToAdd = 0;
+      }
+      
+      updatePoints(pointToAdd);
     }
 
   };
 
   useEffect(() => {
-    console.log("UseState triggered " + index + " " + stress);
+    //console.log("UseState triggered " + index + " " + stress);
 
     if (index === stress) {
-      console.log("Changement de couleur");
+      //console.log("Changement de couleur");
       setBgcolor((bgcolor) => "green");
     }
 

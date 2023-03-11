@@ -20,7 +20,7 @@ const Game = () => {
     const text = await response.text();
     const wordList = text.split("\n");
     const word = wordList[Math.floor(Math.random() * wordList.length)];
-    console.log("Chosen Word : " + word);
+    //console.log("Chosen Word : " + word);
     setChosenWord((chosenWord) => word);
   };
 
@@ -33,8 +33,8 @@ const Game = () => {
     if (flag === 1) {
       setPlaying((playing) => playing + 1);
       setGamePoints((gamePoints) => gamePoints + points);
-      console.log("gamePoints : " + gamePoints);
-      console.log("===============================================================================================");
+      //console.log("gamePoints : " + gamePoints);
+      //console.log("===============================================================================================");
       document.getElementById("#next").style.display = "block";
 
 
@@ -74,7 +74,7 @@ const Game = () => {
 
   function nostress() {
     if (flag === 1) {
-      console.log("No stress !" + stress);
+      //console.log("No stress !" + stress);
       if (stress < 0) {
         addPoints(10);
       }
@@ -97,15 +97,15 @@ const Game = () => {
 
   return (
     <div className="game">
-      <h1 class="gameTitle">stressguessr</h1>
+      <h1 className="gameTitle">stressguessr</h1>
 
 
       <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} playing={playing}  />
-      <button onClick={nostress} class="nostressbutton">No Stress</button>
-      <button onClick={newgame} class="newgamebutton">New Game</button>
-      <a class="points">Points : {gamePoints}</a>
-      <button class="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>
-      <a class="round">Round : {round}/10</a>
+      <button onClick={nostress} className="nostressbutton">No Stress</button>
+      <button onClick={newgame} className="newgamebutton">New Game</button>
+      <a className="points">Points : {gamePoints}</a>
+      <button className="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>
+      <a className="round">Round : {round}/10</a>
 
     </div>
   );

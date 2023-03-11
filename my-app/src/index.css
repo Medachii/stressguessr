@@ -156,3 +156,8 @@ ul {
   left : 3.5%;
   font-size: 20px;
 }
+
+.pronunciation{
+  position: relative;
+  font-size : 20px;
+}
