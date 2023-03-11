@@ -3,7 +3,7 @@ import "./ListeMots.css";
 
 function ListeMots({ entries }) {
   function readAudio(link) {
-    console.log("Coucou voici le lien : " + link);
+    //console.log("Coucou voici le lien : " + link);
     var audio = new Audio(link);
     audio.play();
   }

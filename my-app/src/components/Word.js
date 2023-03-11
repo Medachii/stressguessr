@@ -81,7 +81,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     ']': [''],
   }
   function extractPhoneme(data) {
-    console.log("===================================================");
+    //console.log("===================================================");
     
     let a = 0;
     let phoneme = data[0].phonetics[0].text;
@@ -93,7 +93,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
       
       if (data[0].phonetics[i] == undefined) {
-        console.log("Audio non trouvé");
+        //console.log("Audio non trouvé");
         a += 1;
         break;
       }
@@ -104,7 +104,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
       else {
         phonemeAudio = data[0].phonetics[i].audio;
       }
-      console.log("phonemeAudio : " + phonemeAudio + " i : " + i);
+      //console.log("phonemeAudio : " + phonemeAudio + " i : " + i);
       //break if data[0].phoenetics[i] is undefined
       if (phonemeAudio != "" && data[0].phonetics[i].text == undefined) {
         phonemeAudio = "";
@@ -120,12 +120,12 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
 
     if (a === 0) {
-      console.log(i-1);
+      //console.log(i-1);
       phoneme = data[0].phonetics[i-1].text;
       setWhichPhoneme((whichPhoneme) => i-1);
       setPronunciation((pronunciation) => data[0].phonetics[i-1].audio);
       setExistingSound((existingSound) => true);
-      console.log("audio trouvé : " + i-1);
+      //console.log("audio trouvé : " + i-1);
     }
     else {
       let k = 0;
@@ -140,7 +140,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
       setWhichPhoneme((whichPhoneme) => k);
       setExistingSound((existingSound) => false);
       setPronunciation((pronunciation) => "");
-      console.log("audio non trouvé, phoneme : " + k);
+      //console.log("audio non trouvé, phoneme : " + k);
     }
 
     return phoneme;
@@ -149,14 +149,14 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   function extractDefinition(data) {
     let definition = data[0].meanings[0].definitions[0].definition;
-    console.log("definition : " + definition);
+    //console.log("definition : " + definition);
     return definition;
   }
 
   function extractPronunciation(data) {
-    console.log("whichPhoneme : " + whichPhoneme);
+    //console.log("whichPhoneme : " + whichPhoneme);
     let pronunciation = data[0].phonetics[whichPhoneme].audio;
-    console.log(" pronunciation : " + pronunciation);
+    //console.log(" pronunciation : " + pronunciation);
     return pronunciation;
   }
 

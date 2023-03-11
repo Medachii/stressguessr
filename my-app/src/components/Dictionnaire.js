@@ -4,7 +4,7 @@ import mots from "../dictionary.json";
 import "./dictionary.css";
 
 function readAudio(link) {
-  console.log("Coucou voici le lien : " + link);
+  //console.log("Coucou voici le lien : " + link);
   var audio = new Audio(link);
   audio.play();
 }
