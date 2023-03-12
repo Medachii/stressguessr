@@ -1,4 +1,4 @@
-import React, { useEffect, useState, readAudio } from "react";
+import React, { useEffect, useState} from "react";
 import Letter from "./Letter";
 import "../index.css";
 
@@ -11,7 +11,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
   const [existingSound, setExistingSound] = useState(false);
   const [displayNoStress, setDisplayNoStress] = useState("transparent");
   const [displaySound, setDisplaySound] = useState("transparent");
-  const [whichPhoneme, setWhichPhoneme] = useState(0);
+
 
 
   const phonemedictionnary = {
@@ -55,7 +55,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     'ŋ': ['ng', 'n'],
     'p': ['p', 'pp'],
     'r': ['r', 'rr'],
-    's': ['s', 'ss', 'ce', 'se', ''],
+    's': ['s', 'ss', 'ce', 'se','ps', ''],
     'ʃ': ['sh', 'ch', 'ss', 't', ''],
     'tʃ': ['ch', 'tch'],
     'θ': ['th'],
@@ -89,16 +89,16 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     
     //tant que le phoneme est null
     let i = 1;
-    while (phonemeAudio == "") {
+    while (phonemeAudio === "") {
 
       
-      if (data[0].phonetics[i] == undefined) {
+      if (data[0].phonetics[i] === undefined) {
         //console.log("Audio non trouvé");
         a += 1;
         break;
       }
 
-      if (data[0].phonetics[i].audio == undefined) {
+      if (data[0].phonetics[i].audio === undefined) {
         phonemeAudio = "";
       }
       else {
@@ -106,7 +106,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
       }
       //console.log("phonemeAudio : " + phonemeAudio + " i : " + i);
       //break if data[0].phoenetics[i] is undefined
-      if (phonemeAudio != "" && data[0].phonetics[i].text == undefined) {
+      if (phonemeAudio !== "" && data[0].phonetics[i].text === undefined) {
         phonemeAudio = "";
       }
       /* else {
@@ -122,7 +122,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     if (a === 0) {
       //console.log(i-1);
       phoneme = data[0].phonetics[i-1].text;
-      setWhichPhoneme((whichPhoneme) => i-1);
+    
       setPronunciation((pronunciation) => data[0].phonetics[i-1].audio);
       setExistingSound((existingSound) => true);
       //console.log("audio trouvé : " + i-1);
@@ -137,7 +137,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
         phoneme = data[0].phonetics[k].text;
 
       }
-      setWhichPhoneme((whichPhoneme) => k);
+
       setExistingSound((existingSound) => false);
       setPronunciation((pronunciation) => "");
       //console.log("audio non trouvé, phoneme : " + k);
@@ -153,12 +153,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     return definition;
   }
 
-  function extractPronunciation(data) {
-    //console.log("whichPhoneme : " + whichPhoneme);
-    let pronunciation = data[0].phonetics[whichPhoneme].audio;
-    //console.log(" pronunciation : " + pronunciation);
-    return pronunciation;
-  }
+
 
 
   function getPhoneme(word, callback) {

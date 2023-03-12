@@ -1,5 +1,4 @@
-import React, { useState, useEffect, forceUpdate } from "react";
-import Game from "./Game.js";
+import React, { useState, useEffect} from "react";
 
 
 
@@ -19,7 +18,7 @@ const Letter = ({ index, lettre, stress, updatePoints, playing, chosenWord }) =>
       if (pointToAdd < 0) {
         pointToAdd = 0;
       }
-      
+
       updatePoints(pointToAdd);
     }
 

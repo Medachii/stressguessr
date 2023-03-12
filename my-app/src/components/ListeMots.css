@@ -4,7 +4,7 @@
     margin: 0;
     /*font-weight: bold;*/
     font-size: large;
-    background-color: #743a69;
+    background: linear-gradient(#e66465, #9198e5);
 }
 .center {
     margin-left: auto;
@@ -17,7 +17,7 @@ td {
     padding: 0.5em;
     /*border: 1px solid #000;*/
     border-collapse: collapse;
-    background-color: #743a69;
+    background-color : transparent;
     color: white;
     font-weight: bold;
     font-size: large;

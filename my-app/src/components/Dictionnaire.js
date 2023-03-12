@@ -17,7 +17,7 @@ function Dictionnaire() {
   }, []);
 
   return (
-    <div>
+    <div className="dictionary">
       <h1>Phoneme dictionary</h1>
 
 
