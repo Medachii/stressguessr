@@ -17,7 +17,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
   const phonemedictionnary = {
     '/': ['none'],
     'h': ['h'],
-    'ə': ['e', 'u', 'a', 'ure', 'er', 'io', 'o', 're', 'ou', ''],
+    'ə': ['e', 'u', 'a', 'ure', 'er', 'io', 'o', 're', 'ou','or', ''],
     'o': ['o'],
     'ʊ': ['u', 'oul', 'o', 'ugh',''],
     '.': [''],
