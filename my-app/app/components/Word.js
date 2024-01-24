@@ -156,24 +156,24 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
 
 
-  function getPhoneme(word, callback) {
+  async function getPhoneme(word, callback) {
     const Http = new XMLHttpRequest();
-    const url = "https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word);
-    Http.open("GET", url);
-    Http.send();
-    Http.responseType = "json";
-    Http.onload = () => {
-      if (Http.readyState === 4 && Http.status === 200) {
-        const data = Http.response;
-        let extractedPhoneme = extractPhoneme(data);
-        let extractedDefinition = extractDefinition(data);
-        //let extractedPronunciation = extractPronunciation(data);
-        setDefinition((definition) => extractedDefinition);
+
+
+    const response = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word),{method : 'GET'});
+    const data = await response.json();
+    let extractedPhonemee = extractPhoneme(data);
+    console.log("bonjour : " + extractedPhonemee);
+    console.log("bonjour : " + data);
+
+    let extractedPhoneme = extractPhoneme(data);
+    let extractedDefinition = extractDefinition(data);
+    //let extractedPronunciation = extractPronunciation(data);
+    setDefinition((definition) => extractedDefinition);
 
         //console.log("extracted : " + extractedPhoneme);
-        callback(extractedPhoneme);
-      }
-    };
+    callback(extractedPhoneme);
+     
   }
   let stress = -2;
   let wordFinished = false;
