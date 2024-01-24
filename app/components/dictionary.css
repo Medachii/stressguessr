@@ -1,0 +1,10 @@
+.dictionary{
+    padding : 100px;
+    background: linear-gradient(#e66465, #9198e5);
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
