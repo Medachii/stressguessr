@@ -1,0 +1,20 @@
+
+N2L :
+
+-Rendre le site beau
+-Bcp tester
+
+
+
+Numieow :
+
+-Faire le dictionnaire
+-Faire la doc
+
+A faire à la fin :
+
+-ENLEVER TOUS LES CONSOLE.LOG
+
+Ratio + pas lu :
+
+-choisir le nbr de round

@@ -1,0 +1,14 @@
+{
+  "node": {
+    "bd7eaa178e94644910c6e14a87a419d77e6569c1": {
+      "workers": {
+        "app/game/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22D%3A%5C%5Cstressguessr%5C%5Cmy-app%5C%5Capp%5C%5Capi%5C%5CreadDataFile.js%22%2C%5B%22Read%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/game/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "HJsrlai5rBeuWCMcwc2xTLF7WUMP71AIzJQldckuYBQ="
+}

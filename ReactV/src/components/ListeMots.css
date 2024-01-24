@@ -1,0 +1,24 @@
+.window, body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    color: white;
+    margin: 0;
+    /*font-weight: bold;*/
+    font-size: large;
+    background: linear-gradient(#e66465, #9198e5);
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5em;
+    /*border: 1px solid #000;*/
+    border-collapse: collapse;
+    background-color : transparent;
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
