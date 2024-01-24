@@ -179,9 +179,12 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     }
     catch(error){
       console.log(error);
+    
+    }
   }
   let stress = -2;
   let wordFinished = false;
+  
 
   function findtheStress(word) {
     //console.log("findtheStress");
