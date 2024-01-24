@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState} from "react";
 import Letter from "./Letter";
 import "/public/index.css";
@@ -157,9 +159,10 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
 
   async function getPhoneme(word, callback) {
-    const Http = new XMLHttpRequest();
 
+    try{
 
+    
     const response = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word),{method : 'GET'});
     const data = await response.json();
     let extractedPhonemee = extractPhoneme(data);
@@ -173,7 +176,9 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
         //console.log("extracted : " + extractedPhoneme);
     callback(extractedPhoneme);
-     
+    }
+    catch(error){
+      console.log(error);
   }
   let stress = -2;
   let wordFinished = false;
