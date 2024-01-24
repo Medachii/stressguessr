@@ -4,7 +4,7 @@ import Word from "/app/components/Word.js";
 import { useState, useEffect } from "react";
 import path from 'path';
 import {Read} from "/app/api/readDataFile.js";
-import Navbar from "/app/components/NavBar.js";
+import Navbar from "/app/components/Navbar.js";
 
 
 

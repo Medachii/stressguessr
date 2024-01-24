@@ -7,7 +7,7 @@ import ListeMots from "/app/components/ListeMots";
 import mots from "../dictionary.json";
 import "/app/components/dictionary.css";
 import "/public/index.css";
-import Navbar from "/app/components/NavBar";
+import Navbar from "/app/components/Navbar";
 
 
 

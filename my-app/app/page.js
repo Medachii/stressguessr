@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Navbar from "/app/components/NavBar.js";
+import Navbar from "/app/components/Navbar.js";
 import "/public/index.css";
 import { useEffect } from "react";
 
