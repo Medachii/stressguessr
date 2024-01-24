@@ -47,14 +47,14 @@ export default function Dictionary() {
                 pressing the button on the right.
             </p>
             <p>
-                Phonemes have different transcriptions in "normal writing". Those
+                Phonemes have different transcriptions in &quot;normal writing&quot;. Those
                 differents ways of writing them are called graphemes.
             </p>
 
                 <h3>Inaudible phonemes</h3>
 
             <p>
-                Some phonemes don't actually make sounds, but modify the sound that come
+                Some phonemes don&apos;t actually make sounds, but modify the sound that come
                 after them. Here are the most important :
             </p>
                 <ul>

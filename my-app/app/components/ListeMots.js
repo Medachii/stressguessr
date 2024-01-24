@@ -23,7 +23,7 @@ function ListeMots({ entries }) {
         </thead>
         <tbody>
           {entries.map((entry) => (
-            <tr>
+            <tr key={entry.id}>
               <td>{entry.phoneme}</td>
               <td>{entry.mot}</td>
               <td>{entry.phonetic}</td>
