@@ -73,12 +73,15 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     'ɚ': ['ar', 'er'],
     'ɘ': ['e', 'a', 'o'],
     'ɵ': ['ir'],
-    't͡': ['t', 'tur'],
-    'l̩': ['l', 'le'],
+    't͡': ['t', 'tur','ce',''],
+    'l̩': ['l', 'le','ll'],
     'ä' : ['a'],
     'ʰ': [''],
     '[': [''],
     ']': [''],
+    'ɨ' : ['i'],
+    'n̩' : ['n','en'],
+
   }
   function extractPhoneme(data) {
     //console.log("===================================================");
