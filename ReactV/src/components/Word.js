@@ -17,13 +17,13 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
   const phonemedictionnary = {
     '/': ['none'],
     'h': ['h'],
-    'ə': ['e', 'u', 'a', 'ure', 'er', 'io', 'o', 're', 'ou','or', ''],
+    'ə': ['e', 'u', 'a', 'ure', 'er', 'io', 'o', 're', 'ou','or', 'oo',''],
     'o': ['o'],
     'ʊ': ['u', 'oul', 'o', 'ugh',''],
     '.': [''],
     'ɪ': ['i', 'a', 'e', 'u', 'ye', 'y', ''],
     'l': ['l', 'le', 'll'],
-    'i': ['i', 'ee', 'ea', 'y', 'e'],
+    'i': ['i', 'e', 'ee', 'ea', 'y'],
     't': ['t', 'tt', 'te', ''],
     'ˈ': [''],
     'ˌ': [''],
@@ -51,11 +51,11 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     'j': ['y', 'j','i', ''],
     'k': ['k', 'c', 'ck', 'x', 'ch', 'q', 'xh', 'ke'],
     'm': ['m'],
-    'n': ['n'],
+    'n': ['n','nn'],
     'ŋ': ['ng', 'n'],
     'p': ['p', 'pp'],
     'r': ['r', 'rr'],
-    's': ['s', 'ss', 'ce', 'se','ps', ''],
+    's': ['s', 'ss', 'ce', 'se','ps','sc', ''],
     'ʃ': ['sh', 'ch', 'ss', 't', ''],
     'tʃ': ['ch', 'tch'],
     'θ': ['th'],
@@ -218,6 +218,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
           //console.log("finalWord" + finalWord);
           if (finalWord.length > stress) {
             stress = finalWord.length;
+            console.log("oui");
           }
         }
 
@@ -249,7 +250,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
 
       //console.log("-----------------------------------------------------------------------");
-      //console.log("final stress : " + (stress));
+      console.log("final stress : " + (finalStress));
       setFinalStress((finalStress) => stress);
       updateStress(stress);
       return;
