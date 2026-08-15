@@ -58,7 +58,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     'p': ['p', 'pp'],
     'r': ['r', 'rr'],
     's': ['s', 'ss', 'ce', 'se','ps', ''],
-    'ʃ': ['sh', 'ch', 'ss', 't', ''],
+    'ʃ': ['sh', 'ch', 'ss', 't', 'tio', ''],
     'tʃ': ['ch', 'tch'],
     'θ': ['th'],
     'ð': ['th'],
