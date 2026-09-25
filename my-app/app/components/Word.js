@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState} from "react";
 import Letter from "./Letter";
-import "/public/index.css";
 
 
 const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
@@ -289,17 +288,17 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   return (
     <div className="word">
-
+      <p className="word-hint">Click on the letter that carries the stress</p>
       <div className="wordcontainer">
         {chosenWord.split("").map((letter, index) => (
           <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints} playing={playing} chosenWord={chosenWord} />
 
         ))}
       </div>
-      <p className="definition">{definition}</p>
-      
+      {definition && <p className="definition">{definition}</p>}
+
       <p className="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
-      <p className="pronunciation" style={{ display: displaySound }}><audio controls src={pronunciation} /></p>
+      <div className="pronunciation" style={{ display: displaySound }}><audio controls src={pronunciation} /></div>
 
     </div>
   );

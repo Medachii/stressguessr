@@ -1,41 +1,38 @@
-
+"use client";
 
 import React from "react";
 import Link from "next/link";
-import "/public/index.css";
-import { useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { usePathname } from "next/navigation";
 
+const links = [
+    { href: "/", label: "Home" },
+    { href: "/game", label: "Game" },
+    { href: "/dictionary", label: "Dictionary" },
+];
 
-class Navbar extends React.Component {
-    
-    render() {
-        return (
-           
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                <div className="container-fluid">
-                <Link className="navbar-brand nav-link" href="/">StressGuessr</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <Link className="nav-link"  href="/">Home</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" href="/game">Game</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" href="/dictionary">Dictionary</Link>
-                    </li>
-                    </ul>
-                </div>
-                </div>
-            </nav>
-            
-        );
-    }
+export default function Navbar() {
+    const pathname = usePathname();
+
+    return (
+        <nav className="navbar">
+            <div className="navbar-inner">
+                <Link className="brand" href="/">
+                    <span className="brand-logo">ˈ</span>
+                    <span>StressGuessr</span>
+                </Link>
+                <ul className="nav-links">
+                    {links.map((link) => (
+                        <li key={link.href}>
+                            <Link
+                                className={"nav-link" + (pathname === link.href ? " active" : "")}
+                                href={link.href}
+                            >
+                                {link.label}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </nav>
+    );
 }
-
-export default Navbar;

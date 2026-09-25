@@ -1,37 +1,49 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Navbar from "/app/components/Navbar.js";
-import "/public/index.css";
-import { useEffect } from "react";
-
-
-
-
 
 export default function Base() {
-  useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js");
-  }, []);
   return (
-      <main className="window" >
+      <main>
         <Navbar/>
 
-        <div className="container-lg mt-3" >
-            <h1>Home</h1>
+        <div className="page">
+            <section className="hero">
+                <h1>Master the <span className="gradient-text">stress</span> of English words</h1>
+                <p className="hero-lead">
+                    stressguessr is a game that is made to teach you how to pronounce the words of the English language!
+                    Guess which syllable carries the stress, and train your ear along the way.
+                </p>
+                <div className="hero-actions">
+                    <Link className="btn btn-primary" href="/game">Play now →</Link>
+                    <Link className="btn btn-ghost" href="/dictionary">Phoneme dictionary</Link>
+                </div>
+            </section>
 
-            <p>Welcome to stressguessr !</p>
-            <p>stressguessr is a game that is made to teach you how to pronounce the words of the English language ! We use word from the <Link href='https://www.oxfordlearnersdictionaries.com/wordlist/american_english/oxford3000/' target="_blank">Oxford 3000</Link> dictionary, which contains 3000 of the most used word in the English language.</p>
-            <p>We also use the <Link href='https://dictionaryapi.dev/' target="_blank">Dictionary API</Link>, to get the information (phonetics, definition...) of our words.</p>
+            <section className="feature-grid">
+                <div className="card feature">
+                    <div className="feature-icon">📚</div>
+                    <h3>Oxford 3000</h3>
+                    <p>We use words from the <Link href='https://www.oxfordlearnersdictionaries.com/wordlist/american_english/oxford3000/' target="_blank">Oxford 3000</Link> dictionary, which contains 3000 of the most used words in the English language.</p>
+                </div>
+                <div className="card feature">
+                    <div className="feature-icon">🔊</div>
+                    <h3>Real pronunciations</h3>
+                    <p>We use the <Link href='https://dictionaryapi.dev/' target="_blank">Dictionary API</Link> to get the information (phonetics, definition, audio...) of our words.</p>
+                </div>
+                <div className="card feature">
+                    <div className="feature-icon">🧠</div>
+                    <h3>Our own algorithm</h3>
+                    <p>The <Link href='/game'>game</Link> is powered by our own phonetics-to-written-language translation algorithm, and the <Link href='/dictionary'>dictionary</Link> explains how to read phonetic writing.</p>
+                </div>
+            </section>
 
-            <p>On this website, you can find a <Link href='/dictionary'>dictionary</Link> that explains a bit of how to read the phonetic writing of words, and the true <Link href='/game'>game</Link> part, powered by our own phonetics-written language translation algorithm.</p>
-        
-            <p>Created by <Link href='https://github.com/Medachii' target="_blank">Noé-Laurent Laurent</Link> and <Link href='https://github.com/numieow' target="_blank">Maxime Wirth</Link></p>
+            <p className="credits">
+                Created by <Link href='https://github.com/Medachii' target="_blank">Noé-Laurent Laurent</Link> and <Link href='https://github.com/numieow' target="_blank">Maxime Wirth</Link>
+            </p>
         </div>
       </main>
-
-    
   );
 }

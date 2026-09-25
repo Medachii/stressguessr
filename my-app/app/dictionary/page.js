@@ -3,21 +3,15 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import ListeMots from "/app/components/ListeMots";
+import ListeMots, { SpeakerIcon } from "/app/components/ListeMots";
 import mots from "../dictionary.json";
-import "/app/components/dictionary.css";
-import "/public/index.css";
 import Navbar from "/app/components/Navbar";
-
-
-
 
 
 
 export default function Dictionary() {
 
     function readAudio(link) {
-    //console.log("Coucou voici le lien : " + link);
     var audio = new Audio(link);
     audio.play();
     }
@@ -26,111 +20,101 @@ export default function Dictionary() {
     const [entries, setEntries] = useState([]);
 
     useEffect(() => {
-        require("bootstrap/dist/js/bootstrap.bundle.min.js");
         setEntries(mots);
     }, []);
 
     return (
-        <main className="window">
+        <main>
         <Navbar/>
-        <div className="dictionary">
-           
-            <h1>Phoneme dictionary</h1>
+        <div className="page">
 
+            <h1>Phoneme <span className="gradient-text">dictionary</span></h1>
 
-                <h3>General</h3>
+            <section className="card section">
+                <h2>General</h2>
+                <p>
+                    Phonemes are the basic blocs for the phonetic writing of a word. Here is
+                    a list of the most important ones, with a word that is pronounced using
+                    them, and the pronunciation of that word. You can hear the word by
+                    pressing the button on the right.
+                </p>
+                <p style={{ marginBottom: 0 }}>
+                    Phonemes have different transcriptions in &quot;normal writing&quot;. Those
+                    differents ways of writing them are called graphemes.
+                </p>
+            </section>
 
-            <p>
-                Phonemes are the basic blocs for the phonetic writing of a word. Here is
-                a list of the most important ones, with a word that is pronounced using
-                them, and the pronunciation of that word. You can hear the word by
-                pressing the button on the right.
-            </p>
-            <p>
-                Phonemes have different transcriptions in &quot;normal writing&quot;. Those
-                differents ways of writing them are called graphemes.
-            </p>
+            <section className="card section">
+                <h2>Inaudible phonemes</h2>
+                <p>
+                    Some phonemes don&apos;t actually make sounds, but modify the sound that come
+                    after them. Here are the most important:
+                </p>
 
-                <h3>Inaudible phonemes</h3>
-
-            <p>
-                Some phonemes don&apos;t actually make sounds, but modify the sound that come
-                after them. Here are the most important :
-            </p>
-                <ul>
-                <li>
-                    ˈ : signifies the presence of a stress in the word, on the letter that follows it.
-                    <p>Here is an example to differentiate :</p>
-                    <ul>
-                    <li>
-                        {" "}
-                        Present (noun) :{" "}
-                        <button
-                        onClick={() =>
-                            readAudio(
-                            "https://api.dictionaryapi.dev/media/pronunciations/en/present-us-adjective-noun.mp3"
-                            )
-                        }
-                        >
-                        /ˈpɹɛzənt/
-                        </button>
-                    </li>
-                        
-                    <li>
-                        {" "}
-                        Present (verb) :{" "}
-                        <button
-                        onClick={() =>
-                            console.log("coucou")
-
-                        }
-                        >
-                        /pɹəˈzɛnt/
-                        </button>
-                    </li>
+                <div className="inaudible">
+                    <p><span className="symbol">ˈ</span>signifies the presence of a stress in the word, on the letter that follows it.</p>
+                    <ul className="example-list">
+                        <li>
+                            <button
+                            className="phonetic-chip"
+                            onClick={() =>
+                                readAudio(
+                                "https://api.dictionaryapi.dev/media/pronunciations/en/present-us-adjective-noun.mp3"
+                                )
+                            }
+                            >
+                            <SpeakerIcon /> Present <span>(noun)</span> /ˈpɹɛzənt/
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                            className="phonetic-chip"
+                            onClick={() =>
+                                console.log("coucou")
+                            }
+                            >
+                            <SpeakerIcon /> Present <span>(verb)</span> /pɹəˈzɛnt/
+                            </button>
+                        </li>
                     </ul>
-                </li>
-                {/* readAudio(require("../sound/téléchargement.mp3")) */}
-                <br></br>
-                <li>
-                    ː : makes the sound that comes before longer.
-                    <p>Here is an example to differentiate :</p>
-                    <ul>
-                    <li>
-                        Teen :
-                        <button
-                        onClick={() =>
-                            readAudio(
-                            "https://api.dictionaryapi.dev/media/pronunciations/en/teen-us.mp3"
-                            )
-                        }
-                        >
-                        /tiːn/
-                        </button>
-                    </li>
-                    <li>
-                        Tin :
-                        <button
-                        onClick={() =>
-                            readAudio(
-                            "https://api.dictionaryapi.dev/media/pronunciations/en/tin-us.mp3"
-                            )
-                        }
-                        >
-                        /tɪn/
-                        </button>
-                    </li>
+                </div>
+
+                <div className="inaudible">
+                    <p><span className="symbol">ː</span>makes the sound that comes before longer.</p>
+                    <ul className="example-list">
+                        <li>
+                            <button
+                            className="phonetic-chip"
+                            onClick={() =>
+                                readAudio(
+                                "https://api.dictionaryapi.dev/media/pronunciations/en/teen-us.mp3"
+                                )
+                            }
+                            >
+                            <SpeakerIcon /> Teen /tiːn/
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                            className="phonetic-chip"
+                            onClick={() =>
+                                readAudio(
+                                "https://api.dictionaryapi.dev/media/pronunciations/en/tin-us.mp3"
+                                )
+                            }
+                            >
+                            <SpeakerIcon /> Tin /tɪn/
+                            </button>
+                        </li>
                     </ul>
-                </li>
-                </ul>
-          
+                </div>
+            </section>
 
-                <br></br>
-                
-
-            {entries ? <ListeMots entries={entries} /> : <p>Loading dictionary...</p>}
+            <section className="card section">
+                <h2>Phonemes</h2>
+                {entries ? <ListeMots entries={entries} /> : <p>Loading dictionary...</p>}
+            </section>
             </div>
         </main>
         );
     };
-

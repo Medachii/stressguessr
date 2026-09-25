@@ -1,8 +1,6 @@
 "use client";
-import "/public/index.css";
 import Word from "/app/components/Word.js";
 import { useState, useEffect } from "react";
-import path from 'path';
 import {Read} from "/app/api/readDataFile.js";
 import Navbar from "/app/components/Navbar.js";
 
@@ -16,27 +14,20 @@ export default function Game() {
   const [round, setRound] = useState(1);
   const [stress, setStress] = useState(0);
   const [playing, setPlaying] = useState(0);
-  const [displayNoStress, setDisplayNoStress] = useState("block");
-
-
-
+  const [showNext, setShowNext] = useState(false);
+  const [finalScore, setFinalScore] = useState(null);
 
 
 
   const wordChoose = async () => {
-
-  
     const text = await Read();
 
-    const wordList = text.split("\n");
+    const wordList = text.split(/\r?\n/).filter((w) => w.trim() !== "");
 
-    const word = wordList[Math.floor(Math.random() * wordList.length)];
+    const word = wordList[Math.floor(Math.random() * wordList.length)].trim();
 
     setChosenWord((chosenWord) => word);
   };
-
-
-  
 
 
 
@@ -44,85 +35,93 @@ export default function Game() {
     if (flag === 1) {
       setPlaying((playing) => playing + 1);
       setGamePoints((gamePoints) => gamePoints + points);
-      //console.log("gamePoints : " + gamePoints);
-      //console.log("===============================================================================================");
-      document.getElementById("#next").style.display = "block";
-      setDisplayNoStress((displayNoStress) => "none");
-
-
-
+      setShowNext(true);
       setFlag((flag) => 0);
     }
-
-
   }
 
   function newgame() {
     setGamePoints((gamePoints) => 0);
     wordChoose();
-    document.getElementById("#next").style.display = "none";
+    setShowNext(false);
     setFlag((flag) => 1);
     setRound((round) => 1);
-    setDisplayNoStress((displayNoStress) => "block");
   }
 
   function next() {
     wordChoose();
-    document.getElementById("#next").style.display = "none";
+    setShowNext(false);
     setFlag((flag) => 1);
     setRound((round) => round + 1);
-    setDisplayNoStress((displayNoStress) => "block");
     if (round === 10) {
-      alert("You got " + gamePoints + " points !");
+      setFinalScore(gamePoints);
       newgame();
-
     }
-  
-
   }
 
   function updateStress(stresss) {
     setStress((stress) => stresss);
-
   }
 
   function nostress() {
     if (flag === 1) {
-      //console.log("No stress !" + stress);
       if (stress < 0) {
         addPoints(10);
       }
       else {
         addPoints(0);
       }
-      document.getElementById("#next").style.display = "block";
+      setShowNext(true);
       setFlag((flag) => 0);
     }
   }
   //Equivalent à componentDidMount
   useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js");
     wordChoose();
   }, []);
 
 
 
-
   return (
-    <main className="window">
+    <main>
       <Navbar/>
-      <div className="game container-lg">
-        <h1 className="gameTitle">stressguessr</h1>
-        <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} playing={playing}  />
-        <button onClick={nostress} style={{display : displayNoStress}} className="nostressbutton">No Stress</button>
-        <button onClick={newgame} className="newgamebutton">New Game</button>
-        <a className="points">Points : {gamePoints}</a>
-        <button className="nextbutton" id="#next" onClick={next} style={{ display: "none" }}>Next</button>
-        <a className="round">Round : {round}/10</a>
+      <div className="page game">
+        <div className="game-hud">
+          <div className="stat">
+            <span className="stat-label">Round</span>
+            <span className="stat-value">{round}/10</span>
+          </div>
+          <div className="progress">
+            <div className="progress-bar" style={{ width: (round / 10) * 100 + "%" }} />
+          </div>
+          <div className="stat">
+            <span className="stat-label">Points</span>
+            <span className="stat-value gradient-text">{gamePoints}</span>
+          </div>
+        </div>
 
+        <section className="card word-card">
+          <Word chosenWord={chosenWord} updatePoints={addPoints} updateStress={updateStress} playing={playing}  />
+        </section>
+
+        <div className="game-actions">
+          {showNext
+            ? <button onClick={next} className="btn btn-primary">Next word →</button>
+            : <button onClick={nostress} className="btn btn-primary">No stress</button>}
+          <button onClick={newgame} className="btn btn-ghost">New game</button>
+        </div>
       </div>
+
+      {finalScore !== null && (
+        <div className="modal-backdrop" onClick={() => setFinalScore(null)}>
+          <div className="card modal" onClick={(e) => e.stopPropagation()}>
+            <p>Game over! You got</p>
+            <div className="modal-score gradient-text">{finalScore}</div>
+            <p>points out of 100</p>
+            <button className="btn btn-primary" onClick={() => setFinalScore(null)}>Play again</button>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
-//use addPoint to another file
-

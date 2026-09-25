@@ -4,12 +4,11 @@ import React, { useState, useEffect} from "react";
 
 const Letter = ({ index, lettre, stress, updatePoints, playing, chosenWord }) => {
 
-  const [bgcolor, setBgcolor] = useState("transparent");
+  const [stressed, setStressed] = useState(false);
 
 
 
   const letterPushed = () => {
-    //console.log("index : " + index + ", lettre : " + lettre + ", stress : " + stress);
     if (stress < 0) {
       updatePoints(0);
     }
@@ -25,28 +24,24 @@ const Letter = ({ index, lettre, stress, updatePoints, playing, chosenWord }) =>
   };
 
   useEffect(() => {
-    //console.log("UseState triggered " + index + " " + stress);
-
     if (index === stress) {
-      //console.log("Changement de couleur");
-      setBgcolor((bgcolor) => "green");
+      setStressed(true);
     }
 
   }, [playing]);
 
   useEffect(() => {
-    setBgcolor((bgcolor) => "transparent");
+    setStressed(false);
 
   }, [chosenWord]);
 
 
 
   return (
-    <a className="letter" onClick={letterPushed} style={{ backgroundColor: bgcolor }}>
+    <button type="button" className={"letter" + (stressed ? " stressed" : "")} onClick={letterPushed}>
       {lettre}
-    </a>
+    </button>
   );
 };
 
 export default Letter;
-
