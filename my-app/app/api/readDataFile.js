@@ -1,9 +1,5 @@
-"use server";
-import { promises as fs } from 'fs';
-
-
+// The word list is a static file in public/, so it works on Vercel without a server
 export async function Read() {
-    const file = await fs.readFile(process.cwd() + '/app/data.txt', 'utf8');
-    return file;
+    const response = await fetch('/data.txt');
+    return response.text();
   }
-
