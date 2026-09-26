@@ -31,7 +31,7 @@ export default function Base() {
                 <div className="card feature">
                     <div className="feature-icon">🔊</div>
                     <h3>Real pronunciations</h3>
-                    <p>We use the <Link href='https://dictionaryapi.dev/' target="_blank">Dictionary API</Link> to get the information (phonetics, definition, audio...) of our words.</p>
+                    <p>We use the <Link href='https://freedictionaryapi.com/' target="_blank">Free Dictionary API</Link> for phonetics and definitions, and <Link href='https://commons.wikimedia.org/' target="_blank">Wikimedia Commons</Link> recordings to hear our words.</p>
                 </div>
                 <div className="card feature">
                     <div className="feature-icon">🧠</div>

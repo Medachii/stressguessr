@@ -1,4 +1,5 @@
 import React from "react";
+import { playAudio } from "/app/api/dictionary.js";
 
 function SpeakerIcon() {
   return (
@@ -11,11 +12,6 @@ function SpeakerIcon() {
 }
 
 function ListeMots({ entries }) {
-  function readAudio(link) {
-    var audio = new Audio(link);
-    audio.play();
-  }
-
   return (
     <div className="table-wrap">
       <table className="phoneme-table">
@@ -37,7 +33,7 @@ function ListeMots({ entries }) {
                 <button
                   type="button"
                   className="icon-btn"
-                  onClick={() => readAudio(entry.audio)}
+                  onClick={() => playAudio(entry.audio)}
                   aria-label={"Listen to " + entry.mot}
                 >
                   <SpeakerIcon />

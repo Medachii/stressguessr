@@ -6,14 +6,14 @@ import { useState } from "react";
 import ListeMots, { SpeakerIcon } from "/app/components/ListeMots";
 import mots from "../dictionary.json";
 import Navbar from "/app/components/Navbar";
+import { audioFileUrl, playAudio } from "/app/api/dictionary.js";
 
 
 
 export default function Dictionary() {
 
-    function readAudio(link) {
-    var audio = new Audio(link);
-    audio.play();
+    function readAudio(file) {
+        playAudio(audioFileUrl(file));
     }
 
 
@@ -59,7 +59,7 @@ export default function Dictionary() {
                             className="phonetic-chip"
                             onClick={() =>
                                 readAudio(
-                                "https://api.dictionaryapi.dev/media/pronunciations/en/present-us-adjective-noun.mp3"
+                                "en-us-present-adjective.ogg"
                                 )
                             }
                             >
@@ -70,7 +70,7 @@ export default function Dictionary() {
                             <button
                             className="phonetic-chip"
                             onClick={() =>
-                                console.log("coucou")
+                                readAudio("en-us-present-verb1.ogg")
                             }
                             >
                             <SpeakerIcon /> Present <span>(verb)</span> /pɹəˈzɛnt/
@@ -87,7 +87,7 @@ export default function Dictionary() {
                             className="phonetic-chip"
                             onClick={() =>
                                 readAudio(
-                                "https://api.dictionaryapi.dev/media/pronunciations/en/teen-us.mp3"
+                                "en-us-teen.ogg"
                                 )
                             }
                             >
@@ -99,7 +99,7 @@ export default function Dictionary() {
                             className="phonetic-chip"
                             onClick={() =>
                                 readAudio(
-                                "https://api.dictionaryapi.dev/media/pronunciations/en/tin-us.mp3"
+                                "en-us-tin.ogg"
                                 )
                             }
                             >

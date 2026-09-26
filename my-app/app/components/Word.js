@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import Letter from "./Letter";
+import { fetchEntry, fetchAudioUrl, playAudio } from "/app/api/dictionary.js";
+import { SpeakerIcon } from "./ListeMots";
 
 
 const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
@@ -12,6 +14,8 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
   const [existingSound, setExistingSound] = useState(false);
   const [displayNoStress, setDisplayNoStress] = useState("transparent");
   const [displaySound, setDisplaySound] = useState("transparent");
+  const currentWord = useRef(chosenWord);
+  currentWord.current = chosenWord;
 
 
 
@@ -81,104 +85,37 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
     '[': [''],
     ']': [''],
   }
-  function extractPhoneme(data) {
-    //console.log("===================================================");
-    
-    let a = 0;
-    let phoneme = data[0].phonetics[0].text;
-    var phonemeAudio = data[0].phonetics[0].audio;
-    
-    //tant que le phoneme est null
-    let i = 1;
-    while (phonemeAudio === "") {
-
-      
-      if (data[0].phonetics[i] === undefined) {
-        //console.log("Audio non trouvé");
-        a += 1;
-        break;
-      }
-
-      if (data[0].phonetics[i].audio === undefined) {
-        phonemeAudio = "";
-      }
-      else {
-        phonemeAudio = data[0].phonetics[i].audio;
-      }
-      //console.log("phonemeAudio : " + phonemeAudio + " i : " + i);
-      //break if data[0].phoenetics[i] is undefined
-      if (phonemeAudio !== "" && data[0].phonetics[i].text === undefined) {
-        phonemeAudio = "";
-      }
-      /* else {
-        console.log("Break du au trouvage de l'audio");
-        break;
-      } */
-      i++;
-
-    }
-
-
-
-    if (a === 0) {
-      //console.log(i-1);
-      phoneme = data[0].phonetics[i-1].text;
-    
-      setPronunciation((pronunciation) => data[0].phonetics[i-1].audio);
-      setExistingSound((existingSound) => true);
-      //console.log("audio trouvé : " + i-1);
-    }
-    else {
-      let k = 0;
-      phoneme = data[0].phonetics[0].text;
-      //tant que le phoneme est null
-
-      while (phoneme == null) {
-        k++;
-        phoneme = data[0].phonetics[k].text;
-
-      }
-
-      setExistingSound((existingSound) => false);
-      setPronunciation((pronunciation) => "");
-      //console.log("audio non trouvé, phoneme : " + k);
-    }
-
-    return phoneme;
-
-  }
-
-  function extractDefinition(data) {
-    let definition = data[0].meanings[0].definitions[0].definition;
-    //console.log("definition : " + definition);
-    return definition;
-  }
-
-
-
-
   async function getPhoneme(word, callback) {
 
+    setPronunciation((pronunciation) => "");
+    setExistingSound((existingSound) => false);
+    setDefinition((definition) => "");
+
+    if (!word) {
+      return;
+    }
+
+    // Answers for a word that is no longer displayed are ignored
+    const isCurrent = () => currentWord.current === word;
+
     try{
+    const entry = await fetchEntry(word);
+    if (!isCurrent()) {
+      return;
+    }
+    setDefinition((definition) => entry.definition);
 
-    
-    const response = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/{}".replace('{}', word),{method : 'GET'});
-    const data = await response.json();
-    let extractedPhonemee = extractPhoneme(data);
-    console.log("bonjour : " + extractedPhonemee);
-    console.log("bonjour : " + data);
+    fetchAudioUrl(word).then((url) => {
+      if (isCurrent()) {
+        setPronunciation((pronunciation) => url);
+        setExistingSound((existingSound) => url !== "");
+      }
+    });
 
-    let extractedPhoneme = extractPhoneme(data);
-    let extractedDefinition = extractDefinition(data);
-    //let extractedPronunciation = extractPronunciation(data);
-    setDefinition((definition) => extractedDefinition);
-
-        //console.log("extracted : " + extractedPhoneme);
-    callback(extractedPhoneme);
+    callback(entry.phonetic);
     }
     catch(error){
       console.log(error);
-    
     }
   }
   let stress = -2;
@@ -225,13 +162,15 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
           }
         }
 
-        for (let i = 0; i < phonemedictionnary[phoneme[index]].length; i++) {
+        // Unknown symbols are treated as silent instead of crashing the search
+        const graphemes = phonemedictionnary[phoneme[index]] || [''];
+        for (let i = 0; i < graphemes.length; i++) {
           if (wordFinished === true) {
             break;
           }
           //console.log("boucle, index : " + index + ", phoneme : " + phoneme[index] + " traduction du phoeneme : " + phonemedictionnary[phoneme[index]][i]);
           let previousfinalWord = finalWord;
-          finalWord = finalWord + phonemedictionnary[phoneme[index]][i]
+          finalWord = finalWord + graphemes[i]
           //console.log("finalWord : " + finalWord);
 
           //if finalWord is not the same as beginning of wordToFind then don't recall the function
@@ -298,7 +237,11 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
       {definition && <p className="definition">{definition}</p>}
 
       <p className="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
-      <div className="pronunciation" style={{ display: displaySound }}><audio controls src={pronunciation} /></div>
+      <div className="pronunciation" style={{ display: displaySound }}>
+        <button type="button" className="phonetic-chip" onClick={() => playAudio(pronunciation)}>
+          <SpeakerIcon /> Listen
+        </button>
+      </div>
 
     </div>
   );
