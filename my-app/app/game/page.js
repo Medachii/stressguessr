@@ -3,10 +3,12 @@ import Word from "/app/components/Word.js";
 import { useState, useEffect } from "react";
 import {Read} from "/app/api/readDataFile.js";
 import Navbar from "/app/components/Navbar.js";
+import { useTranslation } from "/app/lib/i18n";
 
 
 
 export default function Game() {
+  const { t } = useTranslation();
 
   const [chosenWord, setChosenWord] = useState("");
   const [gamePoints, setGamePoints] = useState(0);
@@ -88,14 +90,14 @@ export default function Game() {
       <div className="page game">
         <div className="game-hud">
           <div className="stat">
-            <span className="stat-label">Round</span>
+            <span className="stat-label">{t("game.round")}</span>
             <span className="stat-value">{round}/10</span>
           </div>
           <div className="progress">
             <div className="progress-bar" style={{ width: (round / 10) * 100 + "%" }} />
           </div>
           <div className="stat">
-            <span className="stat-label">Points</span>
+            <span className="stat-label">{t("game.points")}</span>
             <span className="stat-value gradient-text">{gamePoints}</span>
           </div>
         </div>
@@ -106,19 +108,19 @@ export default function Game() {
 
         <div className="game-actions">
           {showNext
-            ? <button onClick={next} className="btn btn-primary">Next word →</button>
-            : <button onClick={nostress} className="btn btn-primary">No stress</button>}
-          <button onClick={newgame} className="btn btn-ghost">New game</button>
+            ? <button onClick={next} className="btn btn-primary">{t("game.next")}</button>
+            : <button onClick={nostress} className="btn btn-primary">{t("game.noStressButton")}</button>}
+          <button onClick={newgame} className="btn btn-ghost">{t("game.newGame")}</button>
         </div>
       </div>
 
       {finalScore !== null && (
         <div className="modal-backdrop" onClick={() => setFinalScore(null)}>
           <div className="card modal" onClick={(e) => e.stopPropagation()}>
-            <p>Game over! You got</p>
+            <p>{t("game.over")}</p>
             <div className="modal-score gradient-text">{finalScore}</div>
-            <p>points out of 100</p>
-            <button className="btn btn-primary" onClick={() => setFinalScore(null)}>Play again</button>
+            <p>{t("game.outOf")}</p>
+            <button className="btn btn-primary" onClick={() => setFinalScore(null)}>{t("game.playAgain")}</button>
           </div>
         </div>
       )}

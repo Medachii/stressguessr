@@ -5,6 +5,8 @@ import Link from "next/link";
 import Navbar from "/app/components/Navbar";
 import { fetchEntry, WordNotFoundError } from "/app/api/dictionary.js";
 import { stressReadings } from "/app/lib/stress.js";
+import { useTranslation } from "/app/lib/i18n";
+import Definition from "/app/components/Definition";
 
 const MAX_WORDS = 80;
 const PARALLEL_REQUESTS = 4;
@@ -27,21 +29,21 @@ function searchLink(token) {
   return "/search?word=" + encodeURIComponent(lookupKey(token)) + "&from=sentence";
 }
 
-function readingLabel(reading) {
-  return reading.partsOfSpeech.length ? capitalize(reading.partsOfSpeech.join(" / ")) : "Other meaning";
+function readingLabel(reading, t, pos) {
+  return reading.partsOfSpeech.length ? capitalize(reading.partsOfSpeech.map(pos).join(" / ")) : t("sentence.otherMeaning");
 }
 
-function describe(result) {
+function describe(result, t, pos) {
   if (!result || result.state === "loading") {
-    return "Looking up…";
+    return t("sentence.looking");
   }
   if (result.state === "notfound") {
-    return "Not found in the dictionary";
+    return t("sentence.notFound");
   }
   if (result.state === "error") {
-    return "Dictionary unavailable";
+    return t("sentence.unavailable");
   }
-  return result.readings.map((r) => readingLabel(r) + ": " + r.phonetic).join("\n");
+  return result.readings.map((r) => readingLabel(r, t, pos) + ": " + r.phonetic).join("\n");
 }
 
 // The word with its stressed letter highlighted
@@ -59,9 +61,10 @@ function MarkedWord({ token, index }) {
 }
 
 function SentenceWord({ token, result, choice, active, onSelect }) {
+  const { t, pos } = useTranslation();
   if (!result || result.state !== "found") {
     const className = "sw " + (!result || result.state === "loading" ? "sw-loading" : "sw-unknown");
-    return <Link href={searchLink(token)} className={className} title={describe(result)}>{token}</Link>;
+    return <Link href={searchLink(token)} className={className} title={describe(result, t, pos)}>{token}</Link>;
   }
 
   const reading = result.readings[choice] || result.readings[0];
@@ -74,7 +77,7 @@ function SentenceWord({ token, result, choice, active, onSelect }) {
       className += " sw-active";
     }
     return (
-      <button type="button" className={className} title={describe(result)} onClick={onSelect} aria-expanded={active}>
+      <button type="button" className={className} title={describe(result, t, pos)} onClick={onSelect} aria-expanded={active}>
         <MarkedWord token={token} index={index} />
       </button>
     );
@@ -82,18 +85,19 @@ function SentenceWord({ token, result, choice, active, onSelect }) {
 
   const className = "sw" + (reading.status === "unknown" ? " sw-unknown" : "");
   return (
-    <Link href={searchLink(token)} className={className} title={describe(result)}>
+    <Link href={searchLink(token)} className={className} title={describe(result, t, pos)}>
       <MarkedWord token={token} index={index} />
     </Link>
   );
 }
 
 function MeaningPicker({ token, result, choice, onChoose, onClose }) {
+  const { t, pos } = useTranslation();
   return (
     <div className="meaning-picker">
       <div className="meaning-header">
-        <span>Which meaning of <strong>{token}</strong>?</span>
-        <button type="button" className="meaning-close" onClick={onClose} aria-label="Close">×</button>
+        <span>{t("sentence.which", token)}</span>
+        <button type="button" className="meaning-close" onClick={onClose} aria-label={t("close")}>×</button>
       </div>
       <div className="meaning-options">
         {result.readings.map((reading, i) => (
@@ -103,15 +107,22 @@ function MeaningPicker({ token, result, choice, onChoose, onClose }) {
             className={"meaning-option" + ((choice ?? -1) === i ? " selected" : "")}
             onClick={() => onChoose(i)}
           >
-            <span className="meaning-label">{readingLabel(reading)}</span>
+            <span className="meaning-label">{readingLabel(reading, t, pos)}</span>
             <span className="meaning-word">
               <MarkedWord token={token} index={reading.status === "stressed" ? reading.index : -1} />
             </span>
             <span className="meaning-phonetic">{reading.phonetic}</span>
+            <Definition
+              word={lookupKey(token)}
+              partsOfSpeech={reading.partsOfSpeech}
+              english={reading.definition}
+              className="meaning-gloss"
+              showSource={false}
+            />
           </button>
         ))}
       </div>
-      <Link href={searchLink(token)} className="meaning-details">See definitions and audio →</Link>
+      <Link href={searchLink(token)} className="meaning-details">{t("sentence.details")}</Link>
     </div>
   );
 }
@@ -125,6 +136,7 @@ function loadSaved() {
 }
 
 export default function Sentence() {
+  const { t } = useTranslation();
   const [text, setText] = useState(EXAMPLE);
   const [analyzedText, setAnalyzedText] = useState("");
   const [results, setResults] = useState({});
@@ -255,36 +267,36 @@ export default function Sentence() {
     <main>
       <Navbar />
       <div className="page narrow">
-        <h1>Sentence <span className="gradient-text">stress</span></h1>
-        <p className="muted">Type or paste a sentence: the stressed letter of each word is highlighted as you type. Click a word to see it in detail.</p>
+        <h1>{t("sentence.title")}</h1>
+        <p className="muted">{t("sentence.intro")}</p>
 
         <div className="sentence-grid">
           <div className="card sentence-panel">
-            <label className="panel-label" htmlFor="sentence-input">Your text</label>
+            <label className="panel-label" htmlFor="sentence-input">{t("sentence.yourText")}</label>
             <textarea
               id="sentence-input"
               className="text-input sentence-input"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Type an English sentence…"
+              placeholder={t("sentence.placeholder")}
               spellCheck="false"
             />
             <div className="panel-footer">
               <span className={"muted small" + (tooLong ? " warning" : "")}>
-                {words.length} / {MAX_WORDS} words
+                {t("sentence.words", words.length, MAX_WORDS)}
               </span>
               {text && (
                 <button type="button" className="btn btn-ghost btn-small" onClick={() => { setText(""); setChoices({}); setActiveWord(null); }}>
-                  Clear
+                  {t("sentence.clear")}
                 </button>
               )}
             </div>
           </div>
 
           <div className="card sentence-panel">
-            <span className="panel-label">Stress</span>
+            <span className="panel-label">{t("sentence.stress")}</span>
             <div className="sentence-output">{output}</div>
-            {tooLong && <p className="muted small warning">Only the first {MAX_WORDS} words are analyzed.</p>}
+            {tooLong && <p className="muted small warning">{t("sentence.tooLong", MAX_WORDS)}</p>}
             {activeResult && activeResult.state === "found" && (
               <MeaningPicker
                 token={activeToken}
@@ -295,24 +307,19 @@ export default function Sentence() {
               />
             )}
             {!activeResult && ambiguousLeft && (
-              <p className="muted small hint">Click a word underlined with dots to choose its meaning.</p>
+              <p className="muted small hint">{t("sentence.hint")}</p>
             )}
           </div>
         </div>
 
         <div className="legend">
-          <span><span className="sw"><span className="sw-mark">a</span></span> stressed letter</span>
-          <span><span className="sw sw-ambiguous">word</span> stress depends on the meaning</span>
-          <span><span className="sw sw-chosen">word</span> meaning chosen</span>
-          <span><span className="sw sw-unknown">word</span> not found</span>
+          <span><span className="sw"><span className="sw-mark">a</span></span> {t("sentence.legend.stressed")}</span>
+          <span><span className="sw sw-ambiguous">word</span> {t("sentence.legend.ambiguous")}</span>
+          <span><span className="sw sw-chosen">word</span> {t("sentence.legend.chosen")}</span>
+          <span><span className="sw sw-unknown">word</span> {t("sentence.legend.unknown")}</span>
         </div>
 
-        <p className="notice">
-          StressGuessr can make mistakes. Some words are written the same way but stressed differently depending on their meaning,
-          like <strong>present</strong> (a <em>PRE</em>sent / to pre<em>SENT</em>) or <strong>record</strong>: they are marked with a dotted
-          line and you can pick the right meaning, as we cannot guess which one your sentence uses. Names, rare words and some
-          conjugated forms may also be missing from the dictionary.
-        </p>
+        <p className="notice">{t("sentence.notice")}</p>
       </div>
     </main>
   );

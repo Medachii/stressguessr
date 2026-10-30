@@ -5,12 +5,16 @@ import Letter from "./Letter";
 import { fetchEntry, fetchAudioUrl, playAudio } from "/app/api/dictionary.js";
 import { SpeakerIcon } from "./ListeMots";
 import { findStressIndex } from "/app/lib/stress.js";
+import { useTranslation } from "/app/lib/i18n";
+import Definition from "./Definition";
 
 
 const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   const [finalStress, setFinalStress] = useState("");
+  const { t } = useTranslation();
   const [definition, setDefinition] = useState("");
+  const [definitionPos, setDefinitionPos] = useState("");
   const [pronunciation, setPronunciation] = useState("");
   const [existingSound, setExistingSound] = useState(false);
   const [displayNoStress, setDisplayNoStress] = useState("transparent");
@@ -39,6 +43,7 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
       return;
     }
     setDefinition((definition) => entry.definition);
+    setDefinitionPos((definitionPos) => entry.partOfSpeech);
 
     fetchAudioUrl(word).then((url) => {
       if (isCurrent()) {
@@ -86,19 +91,19 @@ const Word = ({ chosenWord, updatePoints, updateStress, playing }) => {
 
   return (
     <div className="word">
-      <p className="word-hint">Click on the letter that carries the stress</p>
+      <p className="word-hint">{t("game.hint")}</p>
       <div className="wordcontainer">
         {chosenWord.split("").map((letter, index) => (
           <Letter key={index} index={index} lettre={letter} stress={finalStress} updatePoints={updatePoints} playing={playing} chosenWord={chosenWord} />
 
         ))}
       </div>
-      {definition && <p className="definition">{definition}</p>}
+      {definition && <Definition word={chosenWord} partsOfSpeech={[definitionPos]} english={definition} />}
 
-      <p className="nostress" style={{ display: displayNoStress }}>There is no stress in this word.</p>
+      <p className="nostress" style={{ display: displayNoStress }}>{t("game.noStress")}</p>
       <div className="pronunciation" style={{ display: displaySound }}>
         <button type="button" className="phonetic-chip" onClick={() => playAudio(pronunciation)}>
-          <SpeakerIcon /> Listen
+          <SpeakerIcon /> {t("listen")}
         </button>
       </div>
 

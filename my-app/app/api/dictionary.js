@@ -76,6 +76,7 @@ async function loadEntry(word) {
   return {
     phonetic: chosen.pronunciation.text,
     definition: entryWithDefinition ? firstDefinition(entryWithDefinition) : "",
+    partOfSpeech: (entryWithDefinition || chosen.entry).partOfSpeech,
     variants,
   };
 }

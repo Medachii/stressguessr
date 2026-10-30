@@ -7,10 +7,12 @@ import ListeMots, { SpeakerIcon } from "/app/components/ListeMots";
 import mots from "../dictionary.json";
 import Navbar from "/app/components/Navbar";
 import { audioFileUrl, playAudio } from "/app/api/dictionary.js";
+import { useTranslation } from "/app/lib/i18n";
 
 
 
 export default function Dictionary() {
+    const { t } = useTranslation();
 
     function readAudio(file) {
         playAudio(audioFileUrl(file));
@@ -28,31 +30,20 @@ export default function Dictionary() {
         <Navbar/>
         <div className="page">
 
-            <h1>Phoneme <span className="gradient-text">dictionary</span></h1>
+            <h1>{t("dictionary.title")}</h1>
 
             <section className="card section">
-                <h2>General</h2>
-                <p>
-                    Phonemes are the basic blocs for the phonetic writing of a word. Here is
-                    a list of the most important ones, with a word that is pronounced using
-                    them, and the pronunciation of that word. You can hear the word by
-                    pressing the button on the right.
-                </p>
-                <p style={{ marginBottom: 0 }}>
-                    Phonemes have different transcriptions in &quot;normal writing&quot;. Those
-                    differents ways of writing them are called graphemes.
-                </p>
+                <h2>{t("dictionary.general")}</h2>
+                <p>{t("dictionary.general1")}</p>
+                <p style={{ marginBottom: 0 }}>{t("dictionary.general2")}</p>
             </section>
 
             <section className="card section">
-                <h2>Inaudible phonemes</h2>
-                <p>
-                    Some phonemes don&apos;t actually make sounds, but modify the sound that come
-                    after them. Here are the most important:
-                </p>
+                <h2>{t("dictionary.inaudible")}</h2>
+                <p>{t("dictionary.inaudibleIntro")}</p>
 
                 <div className="inaudible">
-                    <p><span className="symbol">ˈ</span>signifies the presence of a stress in the word, on the letter that follows it.</p>
+                    <p><span className="symbol">ˈ</span>{t("dictionary.stressMark")}</p>
                     <ul className="example-list">
                         <li>
                             <button
@@ -63,7 +54,7 @@ export default function Dictionary() {
                                 )
                             }
                             >
-                            <SpeakerIcon /> Present <span>(noun)</span> /ˈpɹɛzənt/
+                            <SpeakerIcon /> Present <span>{t("dictionary.noun")}</span> /ˈpɹɛzənt/
                             </button>
                         </li>
                         <li>
@@ -73,14 +64,14 @@ export default function Dictionary() {
                                 readAudio("en-us-present-verb1.ogg")
                             }
                             >
-                            <SpeakerIcon /> Present <span>(verb)</span> /pɹəˈzɛnt/
+                            <SpeakerIcon /> Present <span>{t("dictionary.verb")}</span> /pɹəˈzɛnt/
                             </button>
                         </li>
                     </ul>
                 </div>
 
                 <div className="inaudible">
-                    <p><span className="symbol">ː</span>makes the sound that comes before longer.</p>
+                    <p><span className="symbol">ː</span>{t("dictionary.longMark")}</p>
                     <ul className="example-list">
                         <li>
                             <button
@@ -111,8 +102,8 @@ export default function Dictionary() {
             </section>
 
             <section className="card section">
-                <h2>Phonemes</h2>
-                {entries ? <ListeMots entries={entries} /> : <p>Loading dictionary...</p>}
+                <h2>{t("dictionary.phonemes")}</h2>
+                {entries ? <ListeMots entries={entries} /> : <p>{t("dictionary.loading")}</p>}
             </section>
             </div>
         </main>

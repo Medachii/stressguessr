@@ -1,5 +1,6 @@
 import React from "react";
 import { playAudio } from "/app/api/dictionary.js";
+import { useTranslation } from "/app/lib/i18n";
 
 function SpeakerIcon() {
   return (
@@ -12,15 +13,16 @@ function SpeakerIcon() {
 }
 
 function ListeMots({ entries }) {
+  const { t } = useTranslation();
   return (
     <div className="table-wrap">
       <table className="phoneme-table">
         <thead>
           <tr>
-            <th>Phoneme</th>
-            <th>Word</th>
-            <th>Transcription</th>
-            <th>Listen</th>
+            <th>{t("dictionary.phoneme")}</th>
+            <th>{t("dictionary.word")}</th>
+            <th>{t("dictionary.transcription")}</th>
+            <th>{t("dictionary.listen")}</th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +36,7 @@ function ListeMots({ entries }) {
                   type="button"
                   className="icon-btn"
                   onClick={() => playAudio(entry.audio)}
-                  aria-label={"Listen to " + entry.mot}
+                  aria-label={t("listenTo", entry.mot)}
                 >
                   <SpeakerIcon />
                 </button>
