@@ -557,6 +557,336 @@ p {
   transform: scale(1.08);
 }
 
+/* ---------- Search & sentence ---------- */
+
+.narrow {
+  max-width: 860px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.warning {
+  color: var(--accent-1);
+}
+
+.text-input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.05rem;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.text-input:focus {
+  border-color: var(--accent-2);
+  background: var(--surface-strong);
+}
+
+.text-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.search-bar .text-input {
+  border-radius: 999px;
+}
+
+.letter.static {
+  cursor: default;
+}
+
+.letter.static:hover {
+  transform: none;
+  border-color: var(--border);
+}
+
+.letter.static.stressed:hover {
+  border-color: var(--success);
+}
+
+.phonetic {
+  margin: 16px 0 8px;
+  font-size: 1.2rem;
+  color: var(--accent-2);
+}
+
+.notice {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(230, 100, 101, 0.35);
+  background: rgba(230, 100, 101, 0.1);
+  color: var(--text);
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.reading + .reading {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.reading-label {
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.reading .definition {
+  margin-top: 8px;
+}
+
+.sentence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0 16px;
+}
+
+.sentence-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 240px;
+}
+
+.panel-label {
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.sentence-input {
+  flex: 1;
+  min-height: 160px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-small {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+.sentence-output {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sw {
+  color: var(--text);
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+
+.sw:hover {
+  color: var(--text);
+  background: var(--surface-strong);
+}
+
+.sw-mark {
+  padding: 1px 3px;
+  border-radius: 4px;
+  background: var(--success);
+  color: #06281c;
+  font-weight: 800;
+}
+
+.sw-ambiguous {
+  text-decoration: underline dotted var(--accent-1);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.sw-unknown {
+  color: var(--text-muted);
+  text-decoration: underline wavy rgba(169, 164, 199, 0.5);
+  text-underline-offset: 5px;
+}
+
+.sw-loading {
+  color: var(--text-muted);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Words of the sentence are links, or buttons for words with several meanings */
+button.sw {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.sw-chosen {
+  text-decoration: underline solid var(--accent-2);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.sw-active {
+  background: var(--surface-strong);
+  outline: 1px solid var(--accent-2);
+}
+
+.hint {
+  margin: 16px 0 0;
+}
+
+.meaning-picker {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  animation: appear 0.15s ease-out;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.meaning-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.meaning-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.meaning-close:hover {
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.meaning-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.meaning-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.meaning-option:hover {
+  background: var(--surface-strong);
+}
+
+.meaning-option.selected {
+  border-color: var(--success);
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.meaning-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.meaning-word {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.meaning-phonetic {
+  font-size: 0.85rem;
+  color: var(--accent-2);
+}
+
+.meaning-details {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 600px) {
@@ -590,5 +920,28 @@ p {
 
   .stat-value {
     font-size: 1.3rem;
+  }
+
+  /* Five tabs do not fit next to the logo on a phone */
+  .brand {
+    display: none;
+  }
+
+  .nav-links {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .nav-link {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+
+  .sentence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-bar .btn {
+    padding: 12px 18px;
   }
 }

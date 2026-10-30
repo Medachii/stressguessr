@@ -8,15 +8,38 @@ const COMMONS_FILE_URL = "https://commons.wikimedia.org/wiki/Special:FilePath/";
 const AMERICAN_TAGS = ["General American", "US"];
 const AMERICAN_ACCENTS = /\b(US|GA|GenAm|General American|California|New York|Canada)\b/i;
 
+// The word has no entry or no phonetic transcription in the dictionary
+export class WordNotFoundError extends Error {
+  constructor(word) {
+    super("Word not found: " + word);
+  }
+}
+
 function isAmerican(pronunciation) {
   return pronunciation.tags.some((tag) => AMERICAN_TAGS.includes(tag));
 }
 
-// Returns { phonetic, definition } for a word, or throws if the word is unknown.
-export async function fetchEntry(word) {
+// Prefer an American transcription that marks the stress, like the audio we play
+function choosePronunciation(candidates) {
+  return (
+    candidates.find((c) => isAmerican(c.pronunciation) && c.pronunciation.text.includes("ˈ")) ||
+    candidates.find((c) => c.pronunciation.text.includes("ˈ")) ||
+    candidates.find((c) => isAmerican(c.pronunciation)) ||
+    candidates[0]
+  );
+}
+
+function firstDefinition(entry) {
+  return entry.senses?.length ? entry.senses[0].definition : "";
+}
+
+async function loadEntry(word) {
   const response = await fetch(FREE_DICTIONARY_URL + encodeURIComponent(word));
+  if (response.status === 404) {
+    throw new WordNotFoundError(word);
+  }
   if (!response.ok) {
-    throw new Error("Word not found: " + word);
+    throw new Error("Dictionary unavailable (" + response.status + ")");
   }
   const data = await response.json();
 
@@ -30,23 +53,51 @@ export async function fetchEntry(word) {
     });
   });
 
-  // Prefer an American transcription that marks the stress, like the audio we play
-  const chosen =
-    candidates.find((c) => isAmerican(c.pronunciation) && c.pronunciation.text.includes("ˈ")) ||
-    candidates.find((c) => c.pronunciation.text.includes("ˈ")) ||
-    candidates.find((c) => isAmerican(c.pronunciation)) ||
-    candidates[0];
-
+  const chosen = choosePronunciation(candidates);
   if (chosen === undefined) {
-    throw new Error("No phonetic for: " + word);
+    throw new WordNotFoundError(word);
   }
 
   const entryWithDefinition = chosen.entry.senses?.length ? chosen.entry : data.entries.find((e) => e.senses?.length);
 
+  // One pronunciation per entry (noun, verb...), used to spot homographs
+  // whose stress depends on the meaning, like "present" or "record"
+  const variants = data.entries
+    .map((entry) => {
+      const best = choosePronunciation(candidates.filter((c) => c.entry === entry));
+      return best && {
+        partOfSpeech: entry.partOfSpeech,
+        phonetic: best.pronunciation.text,
+        definition: firstDefinition(entry),
+      };
+    })
+    .filter(Boolean);
+
   return {
     phonetic: chosen.pronunciation.text,
-    definition: entryWithDefinition ? entryWithDefinition.senses[0].definition : "",
+    definition: entryWithDefinition ? firstDefinition(entryWithDefinition) : "",
+    variants,
   };
+}
+
+// Each word is only requested once per visit
+const entryCache = new Map();
+const audioCache = new Map();
+
+// Returns { phonetic, definition, variants } for a word, or throws if the word is unknown.
+export function fetchEntry(word) {
+  const key = word.toLowerCase();
+  if (!entryCache.has(key)) {
+    const promise = loadEntry(key);
+    // Network errors can be retried later, unknown words stay unknown
+    promise.catch((error) => {
+      if (!(error instanceof WordNotFoundError)) {
+        entryCache.delete(key);
+      }
+    });
+    entryCache.set(key, promise);
+  }
+  return entryCache.get(key);
 }
 
 // Picks the best English audio file from a Wiktionary page, US accent first
@@ -64,17 +115,24 @@ export function audioFileUrl(file) {
   return COMMONS_FILE_URL + encodeURIComponent(file.replace(/ /g, "_"));
 }
 
+async function loadAudioUrl(word) {
+  const response = await fetch(WIKTIONARY_URL + encodeURIComponent(word));
+  const data = await response.json();
+  const file = data.parse ? pickAudioFile(data.parse.wikitext["*"]) : undefined;
+  return file ? audioFileUrl(file) : "";
+}
+
 // Returns a playable audio URL for a word, or "" when Wiktionary has no recording
-export async function fetchAudioUrl(word) {
-  try {
-    const response = await fetch(WIKTIONARY_URL + encodeURIComponent(word));
-    const data = await response.json();
-    const file = data.parse ? pickAudioFile(data.parse.wikitext["*"]) : undefined;
-    return file ? audioFileUrl(file) : "";
-  } catch (error) {
-    console.log(error);
-    return "";
+export function fetchAudioUrl(word) {
+  const key = word.toLowerCase();
+  if (!audioCache.has(key)) {
+    audioCache.set(key, loadAudioUrl(key).catch((error) => {
+      console.log(error);
+      audioCache.delete(key);
+      return "";
+    }));
   }
+  return audioCache.get(key);
 }
 
 export function playAudio(url) {
